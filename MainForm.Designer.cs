@@ -190,7 +190,7 @@
             // 
             this.汇总ToolStripMenuItem.Name = "汇总ToolStripMenuItem";
             this.汇总ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.汇总ToolStripMenuItem.Text = "汇总";
+            this.汇总ToolStripMenuItem.Text = "快速汇总";
             this.汇总ToolStripMenuItem.Click += new System.EventHandler(this.汇总ToolStripMenuItem_Click);
             // 
             // label1

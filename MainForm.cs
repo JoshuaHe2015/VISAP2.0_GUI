@@ -72,6 +72,7 @@ namespace VISAP商科应用
 
         private void 汇总ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             Summary SummaryForm = new Summary();
             SummaryForm.Show();
         }
