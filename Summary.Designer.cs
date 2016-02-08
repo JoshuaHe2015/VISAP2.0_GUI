@@ -51,7 +51,7 @@
             this.button_summary.Name = "button_summary";
             this.button_summary.Size = new System.Drawing.Size(75, 23);
             this.button_summary.TabIndex = 1;
-            this.button_summary.Text = "汇总";
+            this.button_summary.Text = "快速汇总";
             this.button_summary.UseVisualStyleBackColor = true;
             this.button_summary.Click += new System.EventHandler(this.button_summary_Click);
             // 
@@ -63,6 +63,7 @@
             this.button_ImportReport.TabIndex = 2;
             this.button_ImportReport.Text = "导入报告";
             this.button_ImportReport.UseVisualStyleBackColor = true;
+            this.button_ImportReport.Click += new System.EventHandler(this.button_ImportReport_Click);
             // 
             // label1
             // 

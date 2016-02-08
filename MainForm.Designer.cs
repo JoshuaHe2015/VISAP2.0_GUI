@@ -38,12 +38,20 @@
             this.导入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.csv文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.批量导入csvToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.导出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.excelxlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.csvcsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关闭ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.数据预处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.检测变量类型ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.缺失值处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.描述ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.汇总ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.简单图表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.统计推断ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.参数估计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.报告ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label_Row = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -99,7 +107,10 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.开始ToolStripMenuItem,
-            this.描述ToolStripMenuItem});
+            this.数据预处理ToolStripMenuItem,
+            this.描述ToolStripMenuItem,
+            this.统计推断ToolStripMenuItem,
+            this.报告ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(784, 25);
@@ -128,7 +139,8 @@
             // 
             this.导入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.excelToolStripMenuItem,
-            this.csv文件ToolStripMenuItem});
+            this.csv文件ToolStripMenuItem,
+            this.批量导入csvToolStripMenuItem1});
             this.导入ToolStripMenuItem.Name = "导入ToolStripMenuItem";
             this.导入ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.导入ToolStripMenuItem.Text = "导入";
@@ -137,16 +149,23 @@
             // excelToolStripMenuItem
             // 
             this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.excelToolStripMenuItem.Text = "Excel(*.xls)";
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.excelToolStripMenuItem.Text = "Excel(*.xls,*.xlsx)";
             this.excelToolStripMenuItem.Click += new System.EventHandler(this.excelToolStripMenuItem_Click);
             // 
             // csv文件ToolStripMenuItem
             // 
             this.csv文件ToolStripMenuItem.Name = "csv文件ToolStripMenuItem";
-            this.csv文件ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.csv文件ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.csv文件ToolStripMenuItem.Text = "csv(*.csv)";
             this.csv文件ToolStripMenuItem.Click += new System.EventHandler(this.csv文件ToolStripMenuItem_Click);
+            // 
+            // 批量导入csvToolStripMenuItem1
+            // 
+            this.批量导入csvToolStripMenuItem1.Name = "批量导入csvToolStripMenuItem1";
+            this.批量导入csvToolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
+            this.批量导入csvToolStripMenuItem1.Text = "批量导入csv";
+            this.批量导入csvToolStripMenuItem1.Click += new System.EventHandler(this.批量导入csvToolStripMenuItem1_Click);
             // 
             // 导出ToolStripMenuItem
             // 
@@ -178,10 +197,34 @@
             this.关闭ToolStripMenuItem.Text = "关闭";
             this.关闭ToolStripMenuItem.Click += new System.EventHandler(this.关闭ToolStripMenuItem_Click);
             // 
+            // 数据预处理ToolStripMenuItem
+            // 
+            this.数据预处理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.检测变量类型ToolStripMenuItem,
+            this.缺失值处理ToolStripMenuItem});
+            this.数据预处理ToolStripMenuItem.Name = "数据预处理ToolStripMenuItem";
+            this.数据预处理ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
+            this.数据预处理ToolStripMenuItem.Text = "数据预处理";
+            // 
+            // 检测变量类型ToolStripMenuItem
+            // 
+            this.检测变量类型ToolStripMenuItem.Name = "检测变量类型ToolStripMenuItem";
+            this.检测变量类型ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.检测变量类型ToolStripMenuItem.Text = "检测变量类型";
+            this.检测变量类型ToolStripMenuItem.Click += new System.EventHandler(this.检测变量类型ToolStripMenuItem_Click);
+            // 
+            // 缺失值处理ToolStripMenuItem
+            // 
+            this.缺失值处理ToolStripMenuItem.Name = "缺失值处理ToolStripMenuItem";
+            this.缺失值处理ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.缺失值处理ToolStripMenuItem.Text = "缺失值处理";
+            this.缺失值处理ToolStripMenuItem.Click += new System.EventHandler(this.缺失值处理ToolStripMenuItem_Click);
+            // 
             // 描述ToolStripMenuItem
             // 
             this.描述ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.汇总ToolStripMenuItem});
+            this.汇总ToolStripMenuItem,
+            this.简单图表ToolStripMenuItem});
             this.描述ToolStripMenuItem.Name = "描述ToolStripMenuItem";
             this.描述ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.描述ToolStripMenuItem.Text = "描述";
@@ -189,9 +232,38 @@
             // 汇总ToolStripMenuItem
             // 
             this.汇总ToolStripMenuItem.Name = "汇总ToolStripMenuItem";
-            this.汇总ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.汇总ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.汇总ToolStripMenuItem.Text = "快速汇总";
             this.汇总ToolStripMenuItem.Click += new System.EventHandler(this.汇总ToolStripMenuItem_Click);
+            // 
+            // 简单图表ToolStripMenuItem
+            // 
+            this.简单图表ToolStripMenuItem.Name = "简单图表ToolStripMenuItem";
+            this.简单图表ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.简单图表ToolStripMenuItem.Text = "简单图表";
+            this.简单图表ToolStripMenuItem.Click += new System.EventHandler(this.简单图表ToolStripMenuItem_Click);
+            // 
+            // 统计推断ToolStripMenuItem
+            // 
+            this.统计推断ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.参数估计ToolStripMenuItem});
+            this.统计推断ToolStripMenuItem.Name = "统计推断ToolStripMenuItem";
+            this.统计推断ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.统计推断ToolStripMenuItem.Text = "统计推断";
+            // 
+            // 参数估计ToolStripMenuItem
+            // 
+            this.参数估计ToolStripMenuItem.Name = "参数估计ToolStripMenuItem";
+            this.参数估计ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.参数估计ToolStripMenuItem.Text = "参数估计";
+            this.参数估计ToolStripMenuItem.Click += new System.EventHandler(this.参数估计ToolStripMenuItem_Click);
+            // 
+            // 报告ToolStripMenuItem
+            // 
+            this.报告ToolStripMenuItem.Name = "报告ToolStripMenuItem";
+            this.报告ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.报告ToolStripMenuItem.Text = "报告";
+            this.报告ToolStripMenuItem.Click += new System.EventHandler(this.报告ToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -280,6 +352,14 @@
         private System.Windows.Forms.ToolStripMenuItem 描述ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 汇总ToolStripMenuItem;
         public System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem 简单图表ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 数据预处理ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 检测变量类型ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 批量导入csvToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 缺失值处理ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 统计推断ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 参数估计ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 报告ToolStripMenuItem;
     }
 }
 

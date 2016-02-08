@@ -13,6 +13,10 @@ namespace VISAP商科应用
     public partial class MainForm : Form
     {
         public static MainForm S = null;
+        public RichTextBox rtb = new RichTextBox();
+        //建立一个RichTextBox，以便于绑定数据
+        public int ReportIsOn = 0;
+        //这个开关用于记录Report窗口是否被打开
         public MainForm()
         {
             InitializeComponent();
@@ -43,6 +47,7 @@ namespace VISAP商科应用
             if (dt != null)
             {
                 dataGridView1.DataSource = dt;
+                Tabulation.DataType(dataGridView1);
             }
             
         }
@@ -75,6 +80,45 @@ namespace VISAP商科应用
             
             Summary SummaryForm = new Summary();
             SummaryForm.Show();
+        }
+
+        private void 简单图表ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EasyGraph GraphForm = new EasyGraph();
+            GraphForm.Show();
+        }
+
+        private void 检测变量类型ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tabulation.DataType(dataGridView1);
+        }
+
+        private void 批量导入csvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void 批量导入csvToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Tabulation.BulkImportCSV(dataGridView1);
+            Tabulation.DataType(dataGridView1);
+        }
+
+        private void 缺失值处理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NAOperation NAOperForm = new NAOperation();
+            NAOperForm.Show();
+        }
+
+        private void 参数估计ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ParameterEstimation ParaForm = new ParameterEstimation();
+            ParaForm.Show();
+        }
+
+        private void 报告ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Report ReportForm = new Report();
+            ReportForm.Show();
         }
     }
 }

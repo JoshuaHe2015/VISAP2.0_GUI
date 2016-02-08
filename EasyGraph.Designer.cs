@@ -37,6 +37,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView_subset = new System.Windows.Forms.DataGridView();
             this.chart_basic = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.设置轴标签ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.清空ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button_add = new System.Windows.Forms.Button();
             this.textBox_ColorShow = new System.Windows.Forms.TextBox();
             this.button_changeColor = new System.Windows.Forms.Button();
@@ -52,11 +57,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox_Legend = new System.Windows.Forms.TextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.清空ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.设置轴标签ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button_ImportReport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_subset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_basic)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -126,6 +127,44 @@
             this.chart_basic.TabIndex = 5;
             this.chart_basic.Text = "chart1";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.设置轴标签ToolStripMenuItem,
+            this.复制ToolStripMenuItem,
+            this.清空ToolStripMenuItem,
+            this.保存ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 92);
+            // 
+            // 设置轴标签ToolStripMenuItem
+            // 
+            this.设置轴标签ToolStripMenuItem.Name = "设置轴标签ToolStripMenuItem";
+            this.设置轴标签ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.设置轴标签ToolStripMenuItem.Text = "设置标题";
+            this.设置轴标签ToolStripMenuItem.Click += new System.EventHandler(this.设置轴标签ToolStripMenuItem_Click);
+            // 
+            // 复制ToolStripMenuItem
+            // 
+            this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
+            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.复制ToolStripMenuItem.Text = "复制";
+            this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
+            // 
+            // 清空ToolStripMenuItem
+            // 
+            this.清空ToolStripMenuItem.Name = "清空ToolStripMenuItem";
+            this.清空ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.清空ToolStripMenuItem.Text = "清空";
+            this.清空ToolStripMenuItem.Click += new System.EventHandler(this.清空ToolStripMenuItem_Click);
+            // 
+            // 保存ToolStripMenuItem
+            // 
+            this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.保存ToolStripMenuItem.Text = "保存";
+            this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
+            // 
             // button_add
             // 
             this.button_add.Location = new System.Drawing.Point(265, 19);
@@ -138,7 +177,7 @@
             // 
             // textBox_ColorShow
             // 
-            this.textBox_ColorShow.Location = new System.Drawing.Point(610, 19);
+            this.textBox_ColorShow.Location = new System.Drawing.Point(530, 19);
             this.textBox_ColorShow.Name = "textBox_ColorShow";
             this.textBox_ColorShow.Size = new System.Drawing.Size(100, 21);
             this.textBox_ColorShow.TabIndex = 7;
@@ -146,7 +185,7 @@
             // 
             // button_changeColor
             // 
-            this.button_changeColor.Location = new System.Drawing.Point(742, 19);
+            this.button_changeColor.Location = new System.Drawing.Point(644, 19);
             this.button_changeColor.Name = "button_changeColor";
             this.button_changeColor.Size = new System.Drawing.Size(75, 23);
             this.button_changeColor.TabIndex = 8;
@@ -156,7 +195,7 @@
             // 
             // button_random
             // 
-            this.button_random.Location = new System.Drawing.Point(841, 19);
+            this.button_random.Location = new System.Drawing.Point(733, 19);
             this.button_random.Name = "button_random";
             this.button_random.Size = new System.Drawing.Size(75, 23);
             this.button_random.TabIndex = 9;
@@ -189,7 +228,8 @@
             this.comboBox_type.FormattingEnabled = true;
             this.comboBox_type.Items.AddRange(new object[] {
             "散点图",
-            "折线图"});
+            "折线图",
+            "阶梯线图"});
             this.comboBox_type.Location = new System.Drawing.Point(99, 108);
             this.comboBox_type.Name = "comboBox_type";
             this.comboBox_type.Size = new System.Drawing.Size(141, 20);
@@ -260,7 +300,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(364, 19);
+            this.label6.Location = new System.Drawing.Point(354, 19);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(48, 16);
             this.label6.TabIndex = 28;
@@ -268,54 +308,27 @@
             // 
             // textBox_Legend
             // 
-            this.textBox_Legend.Location = new System.Drawing.Point(432, 19);
+            this.textBox_Legend.Location = new System.Drawing.Point(416, 19);
             this.textBox_Legend.Name = "textBox_Legend";
             this.textBox_Legend.Size = new System.Drawing.Size(100, 21);
             this.textBox_Legend.TabIndex = 29;
             // 
-            // contextMenuStrip1
+            // button_ImportReport
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.设置轴标签ToolStripMenuItem,
-            this.复制ToolStripMenuItem,
-            this.清空ToolStripMenuItem,
-            this.保存ToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 114);
-            // 
-            // 复制ToolStripMenuItem
-            // 
-            this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
-            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.复制ToolStripMenuItem.Text = "复制";
-            this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
-            // 
-            // 清空ToolStripMenuItem
-            // 
-            this.清空ToolStripMenuItem.Name = "清空ToolStripMenuItem";
-            this.清空ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.清空ToolStripMenuItem.Text = "清空";
-            this.清空ToolStripMenuItem.Click += new System.EventHandler(this.清空ToolStripMenuItem_Click);
-            // 
-            // 保存ToolStripMenuItem
-            // 
-            this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.保存ToolStripMenuItem.Text = "保存";
-            this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
-            // 
-            // 设置轴标签ToolStripMenuItem
-            // 
-            this.设置轴标签ToolStripMenuItem.Name = "设置轴标签ToolStripMenuItem";
-            this.设置轴标签ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.设置轴标签ToolStripMenuItem.Text = "设置标题";
-            this.设置轴标签ToolStripMenuItem.Click += new System.EventHandler(this.设置轴标签ToolStripMenuItem_Click);
+            this.button_ImportReport.Location = new System.Drawing.Point(822, 19);
+            this.button_ImportReport.Name = "button_ImportReport";
+            this.button_ImportReport.Size = new System.Drawing.Size(75, 23);
+            this.button_ImportReport.TabIndex = 30;
+            this.button_ImportReport.Text = "导入报告";
+            this.button_ImportReport.UseVisualStyleBackColor = true;
+            this.button_ImportReport.Click += new System.EventHandler(this.button_ImportReport_Click);
             // 
             // EasyGraph
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(928, 528);
+            this.Controls.Add(this.button_ImportReport);
             this.Controls.Add(this.textBox_Legend);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label_Column);
@@ -375,5 +388,6 @@
         private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 设置轴标签ToolStripMenuItem;
         public System.Windows.Forms.DataVisualization.Charting.Chart chart_basic;
+        private System.Windows.Forms.Button button_ImportReport;
     }
 }

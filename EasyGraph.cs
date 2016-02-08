@@ -70,10 +70,19 @@ namespace VISAP商科应用
 
         private void button_add_Click(object sender, EventArgs e)
         {
+            if (comboBox_x.Text.Trim()  != ""){
             QuickPlot.QPlot(dataGridView_subset,chart_basic,
                 Tabulation.FindCol(dataGridView_subset, comboBox_x.Text),
-                Tabulation.FindCol(dataGridView_subset,comboBox_x.Text), 
+                Tabulation.FindCol(dataGridView_subset,comboBox_y.Text), 
                 textBox_ColorShow,comboBox_type.Text, textBox_Legend.Text);
+            }
+            else
+            {
+                QuickPlot.QPlot(dataGridView_subset, chart_basic,
+                -1,
+                Tabulation.FindCol(dataGridView_subset, comboBox_y.Text),
+                textBox_ColorShow, comboBox_type.Text, textBox_Legend.Text);
+            }
         }
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -158,6 +167,14 @@ namespace VISAP商科应用
         {
             SetLabels LabelForm = new SetLabels();
             LabelForm.ShowDialog();
+        }
+
+        private void button_ImportReport_Click(object sender, EventArgs e)
+        {
+            MemoryStream ms = new MemoryStream();
+            //chart_basic.SaveImage(ms, ChartImageFormat.Jpeg);
+            chart_basic.SaveImage(ms, ChartImageFormat.Jpeg);
+            ReportV.InsertImage(MainForm.S.rtb,ms,MainForm.S.ReportIsOn);
         }
     }
 }

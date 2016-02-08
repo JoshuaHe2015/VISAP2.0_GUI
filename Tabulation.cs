@@ -8,6 +8,7 @@ using System.Data.OleDb;
 using System.IO;
 using System.Windows.Forms;
 using System.Web.UI;
+using System.Drawing;
 namespace VISAP商科应用
 {
     public class Tabulation
@@ -37,7 +38,17 @@ namespace VISAP商科应用
             //该函数的目的是为了导入Excel表格，并返回DataTable
             //根据路径打开一个Excel文件并将数据填充到DataSet中
             //filePath为文件路径，SheetName为表格名称
-            string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source = " + filePath + ";Extended Properties ='Excel 8.0;HDR=NO;IMEX=1'";//导入时包含Excel中的第一行数据，并且将数字和字符混合的单元格视为文本进行导入
+            string strConn = "";
+            if (Path.GetExtension(filePath) == ".xls")
+            {
+                strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source = " + filePath + ";Extended Properties ='Excel 8.0;HDR=NO;IMEX=1'";
+            }
+            else
+            {
+                //strConn = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=Excel 8.0;", path);
+                strConn = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source = " + filePath + ";Extended Properties ='Excel 8.0;HDR=NO;IMEX=1'";
+            }
+            //string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source = " + filePath + ";Extended Properties ='Excel 8.0;HDR=NO;IMEX=1'";//导入时包含Excel中的第一行数据，并且将数字和字符混合的单元格视为文本进行导入
             OleDbConnection conn = new OleDbConnection(strConn);
             conn.Open();
             string strExcel = "";
@@ -86,7 +97,7 @@ namespace VISAP商科应用
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 fileToLoad = openFileDialog1.FileName;
-                LoadFromCSVFile(fileToLoad);
+                //LoadFromCSVFile(fileToLoad);
                 return LoadFromCSVFile(fileToLoad); ;
             }
             else
@@ -407,7 +418,10 @@ namespace VISAP商科应用
             string AllNames ="";
             foreach (string SingleNum in AllNum){
                 if (SingleNum != ""){
-                    AllNames += dataGridView1.Columns[Convert.ToInt32(SingleNum) - 1].Name+",";
+                    if (MathV.IsStringInt(SingleNum))
+                    {
+                        AllNames += dataGridView1.Columns[Convert.ToInt32(SingleNum) - 1].Name + ",";
+                    }
                 }
             }
             if (AllNames != ""){
@@ -426,5 +440,177 @@ namespace VISAP商科应用
             }
             return Values;
         }
+        public static DataTable GetSubset(DataGridView dataGridView1, string Cols)
+        {
+            DataTable OriginDT = new DataTable();
+            DataTable NewDT = new DataTable();
+            OriginDT = dataGridView1.DataSource as DataTable;
+            if (OriginDT == null)
+            {
+                return null;
+            }
+            DataColumn AddCol = new DataColumn();
+            char[] separator = { ',' };
+            string UseToAddCol = "";
+            int AddTimes = 1;
+            string[] ColWanted = Cols.Split(separator);
+            if (OriginDT != null)
+            {
+                for (int q = 0; q < OriginDT.Rows.Count; q++)
+                {
+                    NewDT.Rows.Add();
+                }
+                for (int i = 0; i < OriginDT.Columns.Count; i++)
+                {
+                    foreach (string EachCol in ColWanted)
+                    {
+                        if (Convert.ToInt32(EachCol) - 1 == i)
+                        {
+                            NewDT.Columns.Add(OriginDT.Columns[i].ColumnName);
+                            for (int m = 0; m < OriginDT.Rows.Count; m++)
+                            {
+                                UseToAddCol = OriginDT.Rows[m].ItemArray[i].ToString();
+                                NewDT.Rows[m][OriginDT.Columns[i].ColumnName] = UseToAddCol;
+                                AddTimes++;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return null;
+            }
+            return NewDT;
+        }
+        public static int FindCol(DataGridView dataGridView1,string ID)
+        {
+            for (int i = 0; i < dataGridView1.ColumnCount; i++)
+            {
+                if (dataGridView1.Columns[i].Name == ID)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        public static bool IsStrDouble(string Str)
+        {
+            //判断一个字符串是否为双浮点型
+            if (Str.Trim() == "")
+            {
+                //为空则不作判断
+                return false;
+            }
+            if (Str.Contains('E'))
+            {
+                int position = Str.IndexOf('E');
+                if (Str.Length == position +1)
+                {
+                    //E
+                    return false;
+                }
+                if (Str[position + 1] != '+' && Str[position + 1] != '-')
+                {
+                    return false;
+                }
+                else if (position + 2 == Str.Length - 1)
+                {
+                    //如果加号或减号后面什么都没有，则判定为非数字
+                    return false; 
+                }
+                if (Str.Substring(0, position - 1).Contains('E') || Str.Substring(position + 1, Str.Length - position - 1).Contains('E'))
+                {
+                    return false;
+                }
+                if (IsStrDouble(Str.Substring(0, position - 1)) && IsStrDouble(Str.Substring(position + 2, Str.Length - position - 2)))
+                    //这里加2主要是为了去掉符号
+                    //例：3.0E+12
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                int DecimalTimes = 0;
+                //计算小数点出现的次数，最高不得超过一次
+                for (int i = 0; i < Str.Length; i++)
+                {
+                    if (i == 0 && Str[0] == '-')
+                    {
+                        continue;
+                    }
+                    if (i == 0 && Str[0] == '+')
+                    {
+                        continue;
+                    }
+                    if (Str[i] == '1' || Str[i] == '2' 
+                        ||Str[i] == '3' ||Str[i] == '4' 
+                        ||Str[i] == '5' ||Str[i] == '6' 
+                        ||Str[i] == '7' ||Str[i] == '8' ||
+                        Str[i] == '9' || Str[i] == '0')
+                    {
+                        continue;
+                    }
+                    if (DecimalTimes > 1)
+                    {
+                        return false;
+                    }
+                    if (Str[i] == '.')
+                    {
+                        DecimalTimes++;
+                        continue;
+                    }
+                    return false;
+                }
+                return true;
+            }
+        }
+        public static void DataType(DataGridView datagridview1)
+        {
+            //这个函数的作用是分辨每一列的数据类型，并对字体进行变色
+            //遍历datagridview每一个单元格
+            for (int j = 0; j < datagridview1.Columns.Count; j++ )
+            {
+                for (int i = 0; i < datagridview1.Rows.Count - 1; i++)
+                {
+                    if (datagridview1.Rows[i].Cells[j].Value.ToString() != null && datagridview1.Rows[i].Cells[j].Value.ToString().Trim() != "")
+                    {
+                        if (!IsStrDouble(datagridview1.Rows[i].Cells[j].Value.ToString()))
+                        {
+                            //如果单元格内容为字符串
+                            datagridview1.Columns[j].DefaultCellStyle.ForeColor = Color.Firebrick;
+                            //整列设置为深红色，然后跳出内层循环
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        public static void BulkImportCSV(DataGridView dataGridView1){
+            //批量导入CSV文件
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = "c:\\";
+            openFileDialog1.Filter = "csv文件(*.csv)|*.csv";
+            openFileDialog1.FilterIndex = 2;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.Multiselect = true;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                DataTable dt = new DataTable();
+                string[] files = openFileDialog1.FileNames.ToArray();
+                foreach (string EachFile in files)
+                {
+                    dt.Merge(LoadFromCSVFile(EachFile));
+                }
+                dataGridView1.DataSource = dt;
+            }
+            
+    }
     }
 }
