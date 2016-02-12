@@ -47,9 +47,20 @@ namespace VISAP商科应用
 
         private void Import_Click(object sender, EventArgs e)
         {
-            MainForm.S.dataGridView1.DataSource = Tabulation.ImportExcel(textBox_path.Text, textBox_tabulation.Text);
-            Tabulation.DataType(MainForm.S.dataGridView1);
-            this.Close();
+            //Tabulation.DataType(MainForm.S.dataGridView1);
+            DataTable dt = new DataTable();
+            dt = Tabulation.ImportExcel(textBox_path.Text, textBox_tabulation.Text);;
+            if (dt != null)
+            {
+                //dataGridView1.DataSource = dt;
+                MainForm.MainDT = dt;
+                Tabulation.InitDataSet(MainForm.MainDT, ref MainForm.nMax, ref MainForm.pageCount, ref MainForm.pageCurrent,
+                    ref MainForm.nCurrent, MainForm.S.label_CurrentPage, MainForm.S.label_TotalPage,
+                    MainForm.S.dataGridView1, MainForm.S.textBox_CurrentPage, MainForm.pageSize);
+                //Tabulation.DataType(dataGridView1);
+                this.Close();
+            }
+            
         }
     }
 }

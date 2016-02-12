@@ -58,6 +58,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox_Legend = new System.Windows.Forms.TextBox();
             this.button_ImportReport = new System.Windows.Forms.Button();
+            this.checkBox_IsXLabel = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_subset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_basic)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -74,7 +75,7 @@
             // comboBox_y
             // 
             this.comboBox_y.FormattingEnabled = true;
-            this.comboBox_y.Location = new System.Drawing.Point(47, 70);
+            this.comboBox_y.Location = new System.Drawing.Point(47, 54);
             this.comboBox_y.Name = "comboBox_y";
             this.comboBox_y.Size = new System.Drawing.Size(193, 20);
             this.comboBox_y.TabIndex = 1;
@@ -93,7 +94,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(12, 67);
+            this.label2.Location = new System.Drawing.Point(12, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 19);
             this.label2.TabIndex = 3;
@@ -104,12 +105,14 @@
             this.dataGridView_subset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dataGridView_subset.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_subset.Location = new System.Drawing.Point(16, 201);
+            this.dataGridView_subset.Location = new System.Drawing.Point(16, 195);
             this.dataGridView_subset.Name = "dataGridView_subset";
             this.dataGridView_subset.RowTemplate.Height = 23;
-            this.dataGridView_subset.Size = new System.Drawing.Size(224, 265);
+            this.dataGridView_subset.Size = new System.Drawing.Size(224, 305);
             this.dataGridView_subset.TabIndex = 4;
+            this.dataGridView_subset.VirtualMode = true;
             this.dataGridView_subset.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_subset_CellClick);
+            this.dataGridView_subset.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_subset_CellValueChanged);
             // 
             // chart_basic
             // 
@@ -123,7 +126,7 @@
             this.chart_basic.Legends.Add(legend1);
             this.chart_basic.Location = new System.Drawing.Point(265, 54);
             this.chart_basic.Name = "chart_basic";
-            this.chart_basic.Size = new System.Drawing.Size(651, 462);
+            this.chart_basic.Size = new System.Drawing.Size(651, 496);
             this.chart_basic.TabIndex = 5;
             this.chart_basic.Text = "chart1";
             // 
@@ -167,7 +170,7 @@
             // 
             // button_add
             // 
-            this.button_add.Location = new System.Drawing.Point(265, 19);
+            this.button_add.Location = new System.Drawing.Point(265, 17);
             this.button_add.Name = "button_add";
             this.button_add.Size = new System.Drawing.Size(75, 23);
             this.button_add.TabIndex = 6;
@@ -177,7 +180,7 @@
             // 
             // textBox_ColorShow
             // 
-            this.textBox_ColorShow.Location = new System.Drawing.Point(530, 19);
+            this.textBox_ColorShow.Location = new System.Drawing.Point(527, 17);
             this.textBox_ColorShow.Name = "textBox_ColorShow";
             this.textBox_ColorShow.Size = new System.Drawing.Size(100, 21);
             this.textBox_ColorShow.TabIndex = 7;
@@ -185,7 +188,7 @@
             // 
             // button_changeColor
             // 
-            this.button_changeColor.Location = new System.Drawing.Point(644, 19);
+            this.button_changeColor.Location = new System.Drawing.Point(643, 17);
             this.button_changeColor.Name = "button_changeColor";
             this.button_changeColor.Size = new System.Drawing.Size(75, 23);
             this.button_changeColor.TabIndex = 8;
@@ -195,7 +198,7 @@
             // 
             // button_random
             // 
-            this.button_random.Location = new System.Drawing.Point(733, 19);
+            this.button_random.Location = new System.Drawing.Point(731, 17);
             this.button_random.Name = "button_random";
             this.button_random.Size = new System.Drawing.Size(75, 23);
             this.button_random.TabIndex = 9;
@@ -205,7 +208,7 @@
             // 
             // button_refresh
             // 
-            this.button_refresh.Location = new System.Drawing.Point(71, 172);
+            this.button_refresh.Location = new System.Drawing.Point(71, 166);
             this.button_refresh.Name = "button_refresh";
             this.button_refresh.Size = new System.Drawing.Size(75, 23);
             this.button_refresh.TabIndex = 23;
@@ -217,7 +220,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(13, 108);
+            this.label3.Location = new System.Drawing.Point(13, 103);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 16);
             this.label3.TabIndex = 22;
@@ -229,15 +232,21 @@
             this.comboBox_type.Items.AddRange(new object[] {
             "散点图",
             "折线图",
-            "阶梯线图"});
-            this.comboBox_type.Location = new System.Drawing.Point(99, 108);
+            "阶梯线图",
+            "饼图",
+            "条形图",
+            "柱形图",
+            "面积图",
+            "棱锥图",
+            "雷达图"});
+            this.comboBox_type.Location = new System.Drawing.Point(99, 103);
             this.comboBox_type.Name = "comboBox_type";
             this.comboBox_type.Size = new System.Drawing.Size(141, 20);
             this.comboBox_type.TabIndex = 21;
             // 
             // button_import
             // 
-            this.button_import.Location = new System.Drawing.Point(165, 172);
+            this.button_import.Location = new System.Drawing.Point(165, 166);
             this.button_import.Name = "button_import";
             this.button_import.Size = new System.Drawing.Size(75, 23);
             this.button_import.TabIndex = 20;
@@ -247,7 +256,7 @@
             // 
             // textBox_ChosenCols
             // 
-            this.textBox_ChosenCols.Location = new System.Drawing.Point(16, 140);
+            this.textBox_ChosenCols.Location = new System.Drawing.Point(16, 134);
             this.textBox_ChosenCols.Name = "textBox_ChosenCols";
             this.textBox_ChosenCols.Size = new System.Drawing.Size(224, 21);
             this.textBox_ChosenCols.TabIndex = 19;
@@ -257,7 +266,7 @@
             this.label_Column.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_Column.AutoSize = true;
             this.label_Column.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_Column.Location = new System.Drawing.Point(219, 483);
+            this.label_Column.Location = new System.Drawing.Point(195, 517);
             this.label_Column.Name = "label_Column";
             this.label_Column.Size = new System.Drawing.Size(19, 20);
             this.label_Column.TabIndex = 27;
@@ -268,7 +277,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(140, 483);
+            this.label4.Location = new System.Drawing.Point(140, 517);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(49, 20);
             this.label4.TabIndex = 26;
@@ -279,7 +288,7 @@
             this.label_Row.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_Row.AutoSize = true;
             this.label_Row.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_Row.Location = new System.Drawing.Point(91, 483);
+            this.label_Row.Location = new System.Drawing.Point(67, 517);
             this.label_Row.Name = "label_Row";
             this.label_Row.Size = new System.Drawing.Size(19, 20);
             this.label_Row.TabIndex = 25;
@@ -290,7 +299,7 @@
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(12, 483);
+            this.label5.Location = new System.Drawing.Point(12, 517);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(49, 20);
             this.label5.TabIndex = 24;
@@ -300,7 +309,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(354, 19);
+            this.label6.Location = new System.Drawing.Point(353, 17);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(48, 16);
             this.label6.TabIndex = 28;
@@ -308,14 +317,14 @@
             // 
             // textBox_Legend
             // 
-            this.textBox_Legend.Location = new System.Drawing.Point(416, 19);
+            this.textBox_Legend.Location = new System.Drawing.Point(414, 17);
             this.textBox_Legend.Name = "textBox_Legend";
             this.textBox_Legend.Size = new System.Drawing.Size(100, 21);
             this.textBox_Legend.TabIndex = 29;
             // 
             // button_ImportReport
             // 
-            this.button_ImportReport.Location = new System.Drawing.Point(822, 19);
+            this.button_ImportReport.Location = new System.Drawing.Point(819, 17);
             this.button_ImportReport.Name = "button_ImportReport";
             this.button_ImportReport.Size = new System.Drawing.Size(75, 23);
             this.button_ImportReport.TabIndex = 30;
@@ -323,11 +332,23 @@
             this.button_ImportReport.UseVisualStyleBackColor = true;
             this.button_ImportReport.Click += new System.EventHandler(this.button_ImportReport_Click);
             // 
+            // checkBox_IsXLabel
+            // 
+            this.checkBox_IsXLabel.AutoSize = true;
+            this.checkBox_IsXLabel.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.checkBox_IsXLabel.Location = new System.Drawing.Point(15, 80);
+            this.checkBox_IsXLabel.Name = "checkBox_IsXLabel";
+            this.checkBox_IsXLabel.Size = new System.Drawing.Size(117, 18);
+            this.checkBox_IsXLabel.TabIndex = 32;
+            this.checkBox_IsXLabel.Text = "x作为文本标签";
+            this.checkBox_IsXLabel.UseVisualStyleBackColor = true;
+            // 
             // EasyGraph
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(928, 528);
+            this.ClientSize = new System.Drawing.Size(928, 562);
+            this.Controls.Add(this.checkBox_IsXLabel);
             this.Controls.Add(this.button_ImportReport);
             this.Controls.Add(this.textBox_Legend);
             this.Controls.Add(this.label6);
@@ -389,5 +410,6 @@
         private System.Windows.Forms.ToolStripMenuItem 设置轴标签ToolStripMenuItem;
         public System.Windows.Forms.DataVisualization.Charting.Chart chart_basic;
         private System.Windows.Forms.Button button_ImportReport;
+        private System.Windows.Forms.CheckBox checkBox_IsXLabel;
     }
 }

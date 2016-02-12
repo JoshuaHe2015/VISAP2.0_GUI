@@ -88,7 +88,7 @@ namespace VISAP商科应用
             int ScientificNumber;
             string ScientificNotation = "";
             int digits_part;
-            BigNumber NumberProcess = new BigNumber("0");
+            BigDecimal NumberProcess = 0;
             string ProcessedNumber;
             char[] separator = { '.' };
             //用于分割小数点
@@ -136,14 +136,14 @@ namespace VISAP商科应用
                         //大于9的情况不做考虑，数字太大。
                         digits_part = 9 - (ScientificNotation.Length + 1 + 2);
                         //小数位由此算出
-                        NumberProcess = new BigNumber(Number.ToString()) / (new BigNumber("10")).Power(new BigNumber(ScientificNumber.ToString()), 30);
+                        NumberProcess = new BigDecimal(Number.ToString()) / Math.Pow(10, ScientificNumber);
                         ProcessedNumber = MathV.round(NumberProcess.ToString(), digits_part, 0) + "E+" + ScientificNotation;
                     }
                     else
                     {
                         //如果已经大于已经大于九位了，则不作处理
                         //这种情况极为罕见，不考虑
-                        NumberProcess = new BigNumber(Number.ToString()) / (new BigNumber("10")).Power(new BigNumber(ScientificNumber.ToString()), 30);
+                        NumberProcess = new BigDecimal(Number.ToString()) / Math.Pow(10, ScientificNumber);
                         ProcessedNumber = MathV.round(NumberProcess.ToString(), 0, 0) + "E+" + ScientificNotation;
                     }
 
@@ -178,14 +178,14 @@ namespace VISAP商科应用
                                 //大于9的情况不做考虑，数字太大。
                                 digits_part = 9 - (ScientificNotation.Length + 1 + 2);
                                 //小数位由此算出
-                                NumberProcess = new BigNumber(Number.ToString()) / (new BigNumber("10")).Power(new BigNumber(ScientificNumber.ToString()), 30);
+                                NumberProcess = new BigDecimal(Number.ToString()) / Math.Pow(10, ScientificNumber);
                                 ProcessedNumber = MathV.round(NumberProcess.ToString(), digits_part, 0) + "E+" + ScientificNotation;
                             }
                             else
                             {
                                 //如果已经大于已经大于九位了，则不作处理
                                 //这种情况极为罕见，不考虑
-                                NumberProcess = new BigNumber(Number.ToString()) / (new BigNumber("10")).Power(new BigNumber(ScientificNumber.ToString()), 30);
+                                NumberProcess = new BigDecimal(Number.ToString()) / Math.Pow(10, ScientificNumber);
                                 ProcessedNumber = MathV.round(NumberProcess.ToString(), 0, 0) + "E+" + ScientificNotation;
                             }
                         }
@@ -226,14 +226,14 @@ namespace VISAP商科应用
                             //大于9的情况不做考虑，数字太大。
                             digits_part = 9 - (ScientificNotation.Length + 1 + 2);
                             //小数位由此算出
-                            NumberProcess = new BigNumber(Number.ToString()) * (new BigNumber("10")).Power(new BigNumber(ScientificNumber.ToString()), 30);
+                            NumberProcess = new BigDecimal(Number.ToString()) * Math.Pow(10, ScientificNumber);
                             ProcessedNumber = MathV.round(NumberProcess.ToString(), digits_part, 0) + "E-" + ScientificNotation;
                         }
                         else
                         {
                             //如果已经大于已经大于九位了，则不作处理
                             //这种情况极为罕见，不考虑
-                            NumberProcess = new BigNumber(Number.ToString()) * (new BigNumber("10")).Power(new BigNumber(ScientificNumber.ToString()), 30);
+                            NumberProcess = new BigDecimal(Number.ToString()) * Math.Pow(10, ScientificNumber);
                             ProcessedNumber = MathV.round(NumberProcess.ToString(), 0, 0) + "E-" + ScientificNotation;
                         }
 
@@ -253,6 +253,7 @@ namespace VISAP商科应用
             }
             return ProcessedNumber;
         }
+
         public double MaxDouble(double[] NumberSeries)
         {
             //对Double型数组求最大值
@@ -637,7 +638,14 @@ namespace VISAP商科应用
         }
         public static BigNumber Sqrt(BigNumber Num)
         {
-            return Num.Power(0.5,30);
+            if (Num <= 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return Num.Power(0.5, 30);
+            }
         }
         public static BigNumber Pow(BigNumber Num1,BigNumber Num2,int precision = 30)
         {

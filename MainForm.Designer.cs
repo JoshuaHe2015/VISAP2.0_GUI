@@ -30,8 +30,6 @@
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.AddNewRow = new System.Windows.Forms.Button();
-            this.AddNewCol = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.开始ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +54,23 @@
             this.label_Row = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label_Column = new System.Windows.Forms.Label();
+            this.button_LastPage = new System.Windows.Forms.Button();
+            this.button_NextPage = new System.Windows.Forms.Button();
+            this.button_PreviousPage = new System.Windows.Forms.Button();
+            this.button_FirstPage = new System.Windows.Forms.Button();
+            this.button_Skip = new System.Windows.Forms.Button();
+            this.textBox_CurrentPage = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label_CurrentPage = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label_CurrentPageRow = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label_TotalPage = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.转置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.所有内容ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.选中行ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -71,37 +86,18 @@
             this.dataGridView1.Size = new System.Drawing.Size(760, 314);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // richTextBox1
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(12, 392);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 422);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(760, 158);
+            this.richTextBox1.Size = new System.Drawing.Size(760, 128);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
-            // 
-            // AddNewRow
-            // 
-            this.AddNewRow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AddNewRow.Location = new System.Drawing.Point(565, 362);
-            this.AddNewRow.Name = "AddNewRow";
-            this.AddNewRow.Size = new System.Drawing.Size(75, 23);
-            this.AddNewRow.TabIndex = 2;
-            this.AddNewRow.Text = "添加行";
-            this.AddNewRow.UseVisualStyleBackColor = true;
-            // 
-            // AddNewCol
-            // 
-            this.AddNewCol.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AddNewCol.Location = new System.Drawing.Point(662, 362);
-            this.AddNewCol.Name = "AddNewCol";
-            this.AddNewCol.Size = new System.Drawing.Size(75, 23);
-            this.AddNewCol.TabIndex = 3;
-            this.AddNewCol.Text = "添加变量";
-            this.AddNewCol.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -201,7 +197,8 @@
             // 
             this.数据预处理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.检测变量类型ToolStripMenuItem,
-            this.缺失值处理ToolStripMenuItem});
+            this.缺失值处理ToolStripMenuItem,
+            this.转置ToolStripMenuItem});
             this.数据预处理ToolStripMenuItem.Name = "数据预处理ToolStripMenuItem";
             this.数据预处理ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
             this.数据预处理ToolStripMenuItem.Text = "数据预处理";
@@ -279,11 +276,11 @@
             // 
             this.label_Row.AutoSize = true;
             this.label_Row.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_Row.Location = new System.Drawing.Point(97, 362);
+            this.label_Row.Location = new System.Drawing.Point(88, 362);
             this.label_Row.Name = "label_Row";
-            this.label_Row.Size = new System.Drawing.Size(19, 20);
+            this.label_Row.Size = new System.Drawing.Size(59, 20);
             this.label_Row.TabIndex = 6;
-            this.label_Row.Text = "0";
+            this.label_Row.Text = "0    ";
             // 
             // label3
             // 
@@ -299,23 +296,204 @@
             // 
             this.label_Column.AutoSize = true;
             this.label_Column.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_Column.Location = new System.Drawing.Point(274, 362);
+            this.label_Column.Location = new System.Drawing.Point(297, 362);
             this.label_Column.Name = "label_Column";
             this.label_Column.Size = new System.Drawing.Size(19, 20);
             this.label_Column.TabIndex = 8;
             this.label_Column.Text = "0";
+            // 
+            // button_LastPage
+            // 
+            this.button_LastPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_LastPage.Location = new System.Drawing.Point(467, 362);
+            this.button_LastPage.Name = "button_LastPage";
+            this.button_LastPage.Size = new System.Drawing.Size(70, 23);
+            this.button_LastPage.TabIndex = 9;
+            this.button_LastPage.Text = "末页";
+            this.button_LastPage.UseVisualStyleBackColor = true;
+            this.button_LastPage.Click += new System.EventHandler(this.button_LastPage_Click);
+            // 
+            // button_NextPage
+            // 
+            this.button_NextPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_NextPage.Location = new System.Drawing.Point(467, 391);
+            this.button_NextPage.Name = "button_NextPage";
+            this.button_NextPage.Size = new System.Drawing.Size(70, 23);
+            this.button_NextPage.TabIndex = 10;
+            this.button_NextPage.Text = "下页";
+            this.button_NextPage.UseVisualStyleBackColor = true;
+            this.button_NextPage.Click += new System.EventHandler(this.button_NextPage_Click);
+            // 
+            // button_PreviousPage
+            // 
+            this.button_PreviousPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_PreviousPage.Location = new System.Drawing.Point(386, 391);
+            this.button_PreviousPage.Name = "button_PreviousPage";
+            this.button_PreviousPage.Size = new System.Drawing.Size(70, 23);
+            this.button_PreviousPage.TabIndex = 11;
+            this.button_PreviousPage.Text = "上页";
+            this.button_PreviousPage.UseVisualStyleBackColor = true;
+            this.button_PreviousPage.Click += new System.EventHandler(this.button_PreviousPage_Click);
+            // 
+            // button_FirstPage
+            // 
+            this.button_FirstPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_FirstPage.Location = new System.Drawing.Point(386, 362);
+            this.button_FirstPage.Name = "button_FirstPage";
+            this.button_FirstPage.Size = new System.Drawing.Size(70, 23);
+            this.button_FirstPage.TabIndex = 12;
+            this.button_FirstPage.Text = "首页";
+            this.button_FirstPage.UseVisualStyleBackColor = true;
+            this.button_FirstPage.Click += new System.EventHandler(this.button_FirstPage_Click);
+            // 
+            // button_Skip
+            // 
+            this.button_Skip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Skip.Location = new System.Drawing.Point(702, 362);
+            this.button_Skip.Name = "button_Skip";
+            this.button_Skip.Size = new System.Drawing.Size(70, 23);
+            this.button_Skip.TabIndex = 13;
+            this.button_Skip.Text = "跳转";
+            this.button_Skip.UseVisualStyleBackColor = true;
+            this.button_Skip.Click += new System.EventHandler(this.button_Skip_Click);
+            // 
+            // textBox_CurrentPage
+            // 
+            this.textBox_CurrentPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_CurrentPage.Location = new System.Drawing.Point(592, 362);
+            this.textBox_CurrentPage.Name = "textBox_CurrentPage";
+            this.textBox_CurrentPage.Size = new System.Drawing.Size(70, 21);
+            this.textBox_CurrentPage.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(13, 391);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(69, 20);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "当前第";
+            // 
+            // label_CurrentPage
+            // 
+            this.label_CurrentPage.AutoSize = true;
+            this.label_CurrentPage.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_CurrentPage.Location = new System.Drawing.Point(88, 391);
+            this.label_CurrentPage.Name = "label_CurrentPage";
+            this.label_CurrentPage.Size = new System.Drawing.Size(19, 20);
+            this.label_CurrentPage.TabIndex = 16;
+            this.label_CurrentPage.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(182, 391);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(109, 20);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "当前页行数";
+            // 
+            // label_CurrentPageRow
+            // 
+            this.label_CurrentPageRow.AutoSize = true;
+            this.label_CurrentPageRow.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_CurrentPageRow.Location = new System.Drawing.Point(297, 391);
+            this.label_CurrentPageRow.Name = "label_CurrentPageRow";
+            this.label_CurrentPageRow.Size = new System.Drawing.Size(19, 20);
+            this.label_CurrentPageRow.TabIndex = 18;
+            this.label_CurrentPageRow.Text = "0";
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(547, 362);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 20);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "第:";
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Location = new System.Drawing.Point(668, 362);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 20);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "页";
+            // 
+            // label_TotalPage
+            // 
+            this.label_TotalPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_TotalPage.AutoSize = true;
+            this.label_TotalPage.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_TotalPage.Location = new System.Drawing.Point(547, 391);
+            this.label_TotalPage.Name = "label_TotalPage";
+            this.label_TotalPage.Size = new System.Drawing.Size(139, 20);
+            this.label_TotalPage.TabIndex = 21;
+            this.label_TotalPage.Text = "共0页,每页0行";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(147, 391);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(29, 20);
+            this.label10.TabIndex = 22;
+            this.label10.Text = "页";
+            // 
+            // 转置ToolStripMenuItem
+            // 
+            this.转置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.所有内容ToolStripMenuItem,
+            this.选中行ToolStripMenuItem});
+            this.转置ToolStripMenuItem.Name = "转置ToolStripMenuItem";
+            this.转置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.转置ToolStripMenuItem.Text = "转置";
+            // 
+            // 所有内容ToolStripMenuItem
+            // 
+            this.所有内容ToolStripMenuItem.Name = "所有内容ToolStripMenuItem";
+            this.所有内容ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.所有内容ToolStripMenuItem.Text = "所有内容";
+            this.所有内容ToolStripMenuItem.Click += new System.EventHandler(this.所有内容ToolStripMenuItem_Click);
+            // 
+            // 选中行ToolStripMenuItem
+            // 
+            this.选中行ToolStripMenuItem.Name = "选中行ToolStripMenuItem";
+            this.选中行ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.选中行ToolStripMenuItem.Text = "选中行";
+            this.选中行ToolStripMenuItem.Click += new System.EventHandler(this.选中行ToolStripMenuItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label_TotalPage);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label_CurrentPageRow);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label_CurrentPage);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBox_CurrentPage);
+            this.Controls.Add(this.button_Skip);
+            this.Controls.Add(this.button_FirstPage);
+            this.Controls.Add(this.button_PreviousPage);
+            this.Controls.Add(this.button_NextPage);
+            this.Controls.Add(this.button_LastPage);
             this.Controls.Add(this.label_Column);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label_Row);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.AddNewCol);
-            this.Controls.Add(this.AddNewRow);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
@@ -332,8 +510,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button AddNewRow;
-        private System.Windows.Forms.Button AddNewCol;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 开始ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 新建ToolStripMenuItem;
@@ -360,6 +536,23 @@
         private System.Windows.Forms.ToolStripMenuItem 统计推断ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 参数估计ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 报告ToolStripMenuItem;
+        private System.Windows.Forms.Button button_LastPage;
+        private System.Windows.Forms.Button button_NextPage;
+        private System.Windows.Forms.Button button_PreviousPage;
+        private System.Windows.Forms.Button button_FirstPage;
+        private System.Windows.Forms.Button button_Skip;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label_CurrentPageRow;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label10;
+        public System.Windows.Forms.TextBox textBox_CurrentPage;
+        public System.Windows.Forms.Label label_CurrentPage;
+        public System.Windows.Forms.Label label_TotalPage;
+        private System.Windows.Forms.ToolStripMenuItem 转置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 所有内容ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 选中行ToolStripMenuItem;
     }
 }
 

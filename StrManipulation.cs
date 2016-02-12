@@ -16,6 +16,7 @@ namespace VISAP商科应用
         }
         public static string PadLeftX(string Str, char ch,int TotalLength)
         {
+            
             //该函数在左边补足所需长度
             //Str为需要调整的字符串
             //ch为用于填充的字符
@@ -30,9 +31,13 @@ namespace VISAP商科应用
             {
                 int space = TotalLength - len;
                 //计算空白个数
+                StringBuilder StrX = new StringBuilder();
                 string AddStr = new string(ch, space);
                 //生成用于补上空缺的字符串
-                return (AddStr + Str);
+                StrX.Append(AddStr);
+                StrX.Append(Str);
+                return StrX.ToString();
+                //return (AddStr + Str);
                 //连接起来即可
             }
         }
@@ -51,24 +56,26 @@ namespace VISAP商科应用
             {
                 int space = TotalLength - len;
                 //计算空白个数
+                StringBuilder StrX = new StringBuilder(Str);
                 string AddStr = new string(ch, space);
                 //生成用于补上空缺的字符串
-                return (Str+AddStr);
+                StrX.Append(AddStr);
+                return StrX.ToString();
                 //连接起来即可
             }
         }
         public static string VariableNamePolish(string VarName,int Length = 12)
         {
             //这个函数的作用是调整变量名称长度
-            VarName = VarName.TrimStart();
-            VarName = VarName.TrimEnd();
+            VarName = VarName.Trim();
             VarName = VarName.Replace(" ", "_");
+            int VarLen = VarName.Length;
             int i = 0;
-             int EndSubStr = 0;
+            int EndSubStr = 0;
             if (CountStrLen(VarName) > Length)
             {
-               
-                for (i = 0; i < VarName.Length; i++)
+
+                for (i = 0; i < VarLen; i++)
                 {
                     if (CountStrLen(VarName.Substring(0, i)) > Length - 3)
                     {
@@ -77,7 +84,10 @@ namespace VISAP商科应用
                         break;
                     }
                 }
-                return (VarName.Substring(0, EndSubStr) + "~" + VarName[VarName.Length - 1]);
+                StringBuilder VariableName = new StringBuilder(VarName.Substring(0, EndSubStr));
+                VariableName.Append("~");
+                VariableName.Append(VarName[VarName.Length - 1]);
+                return VariableName.ToString();
             }
             else
             {

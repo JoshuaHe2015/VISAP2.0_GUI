@@ -31,7 +31,7 @@ namespace VISAP商科应用
            Sum = 0;
            if (comboBox_user_defined.Text == "平均值")
            {
-               string [] Numbers = Tabulation.ReadVector(dataGridView1, Convert.ToInt32(Col) - 1).ToArray();
+               string [] Numbers = Tabulation.ReadVector(MainForm.MainDT, Convert.ToInt32(Col) - 1).ToArray();
                int NumCounts = 0;
                foreach (string Num in Numbers)
                {

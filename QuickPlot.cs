@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Data;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 namespace VISAP商科应用
 {
     public class QuickPlot
     {
-        public static void QPlot(DataGridView dataGridView1, Chart chart_basic, int xCol, int yCol, TextBox ChooseColor,string type, string Legend = "")
+        public static void QPlot(DataTable dt, Chart chart_basic, int xCol, int yCol, TextBox ChooseColor,string type, string Legend = "",bool IsXLabel = false)
         {
             //如果xCol = -1，则认为x轴没有数值
             //yCol必须存在
@@ -21,17 +22,35 @@ namespace VISAP商科应用
             if (Legend != ""){
                 series.LegendText = Legend;
             }
-            if (type == "散点图")
+            switch (type)
             {
-                series.ChartType = SeriesChartType.Point;
-            }
-            else if (type == "折线图")
-            {
-                series.ChartType = SeriesChartType.Line;
-            }
-            else if (type == "阶梯线图")
-            {
-                series.ChartType = SeriesChartType.StepLine ;
+                case "散点图":
+                    series.ChartType = SeriesChartType.Point;
+                    break;
+                case "折线图":
+                    series.ChartType = SeriesChartType.Line;
+                    break;
+                case "阶梯线图":
+                    series.ChartType = SeriesChartType.StepLine;
+                    break;
+                case "饼图":
+                    series.ChartType = SeriesChartType.Pie;
+                    break;
+                case "条形图":
+                    series.ChartType = SeriesChartType.Bar;
+                    break;
+                case "柱形图":
+                    series.ChartType = SeriesChartType.Column;
+                    break;
+                case "面积图":
+                    series.ChartType = SeriesChartType.Area;
+                    break;
+                case "棱锥图":
+                    series.ChartType = SeriesChartType.Pyramid;
+                    break;
+                case "雷达图":
+                    series.ChartType = SeriesChartType.Radar;
+                    break;
             }
             if (ChooseColor.Text != "随机颜色")
             {
@@ -45,19 +64,19 @@ namespace VISAP商科应用
             //MaxXValue和MinXValue用于找出X的最大和最小值，以供调整间隔使用
             int ReadDataCounts = 0;
             //ReadDataCounts用于计数
-            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            int dtRowsCount = dt.Rows.Count;
+            string TempXLabel = "";
+            for (int i = 0; i < dtRowsCount; i++)
             {
-                if (dataGridView1.Rows[i].Cells[yCol].Value.ToString() != "")
+                if (dt.Rows[i][yCol].ToString() != "")
                 {
                     if (xCol != -1)
                     {
-                        if (dataGridView1.Rows[i].Cells[xCol].Value.ToString() != "")
+                        if (IsXLabel == false)
                         {
-                            if (Tabulation.IsStrDouble(dataGridView1.Rows[i].Cells[xCol].Value.ToString()) && Tabulation.IsStrDouble(dataGridView1.Rows[i].Cells[yCol].Value.ToString()))
+                            if (double.TryParse(dt.Rows[i][xCol].ToString(), out TempX) && double.TryParse(dt.Rows[i][yCol].ToString(), out TempY))
                             {
                                 //先要检测数据是否为double类型
-                                TempX = Convert.ToDouble(dataGridView1.Rows[i].Cells[xCol].Value.ToString());
-                                TempY = Convert.ToDouble(dataGridView1.Rows[i].Cells[yCol].Value.ToString());
                                 series.Points.AddXY(TempX, TempY);
                                 if (ReadDataCounts == 0)
                                 {
@@ -78,13 +97,26 @@ namespace VISAP商科应用
                                 ReadDataCounts++;
                             }
                         }
+                        else
+                        {
+                            //xLabel = true
+                            TempXLabel = dt.Rows[i][xCol].ToString().Trim();
+                            if (TempXLabel != "")
+                            {
+                                if (double.TryParse(dt.Rows[i][yCol].ToString(), out TempY))
+                                {
+                                    //只需要检测y的数据是否为double类型
+                                    //x作为标签，视为字符串
+                                    series.Points.AddXY(TempXLabel, TempY);
+                                    ReadDataCounts++;
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        if (Tabulation.IsStrDouble(dataGridView1.Rows[i].Cells[yCol].Value.ToString()))
+                        if (double.TryParse(dt.Rows[i][yCol].ToString(), out TempY))
                         {
-                            TempX = ReadDataCounts;
-                            TempY = Convert.ToDouble(dataGridView1.Rows[i].Cells[yCol].Value.ToString());
                             series.Points.AddY(TempY);
                             if (ReadDataCounts == 0)
                             {
@@ -107,18 +139,22 @@ namespace VISAP商科应用
                     }
                 }
             }
-            if (ReadDataCounts > 0 && xCol != -1)
+            if (ReadDataCounts > 0 && xCol != -1 && IsXLabel == false)
             {
-                char[] separator = { ',' };
-
-                string[] MinAndMax = RegulateAll(MinXValue, MaxXValue, 6).Split(separator);
+                RegulateAll(ref MinXValue,ref MaxXValue, 6);
                 chart_basic.Series.Add(series);
                 var XAxis = chart_basic.ChartAreas[0].AxisX;
-                XAxis.Maximum = Convert.ToDouble(MinAndMax[1]);
-                XAxis.Minimum = Convert.ToDouble(MinAndMax[0]);
+                XAxis.Maximum = MaxXValue;
+                XAxis.Minimum = MinXValue;
                 XAxis.MajorGrid.Enabled = false;
                 var YAxis = chart_basic.ChartAreas[0].AxisY;
                 YAxis.MajorGrid.Enabled = false;
+                return;
+            }
+            else if (xCol != -1 && IsXLabel == true)
+            {
+                chart_basic.Series.Add(series);
+                return;
             }
             if (xCol == -1)
             {
@@ -127,13 +163,14 @@ namespace VISAP商科应用
                 XAxis.MajorGrid.Enabled = false;
                 var YAxis = chart_basic.ChartAreas[0].AxisY;
                 YAxis.MajorGrid.Enabled = false;
+                return;
             }
         }
-        static string RegulateAll(double dMin, double dMax, int iMaxAxisNum)
+        static void RegulateAll(ref double dMin, ref double dMax, int iMaxAxisNum)
         {
             //用于调整X轴间隔
             if (iMaxAxisNum < 1 || dMax < dMin)
-                return "NA";
+                return;
 
             double dDelta = dMax - dMin;
             if (dDelta < 1.0) //Modify this by your requirement.
@@ -169,7 +206,9 @@ namespace VISAP商科应用
                     break;
                 }
             }
-            return dStartPoint.ToString() + "," + dEndPoint.ToString();
+            dMin = dStartPoint;
+            dMax = dEndPoint;
+            return;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data;
 namespace VISAP商科应用
 {
     public class Stat
@@ -561,7 +562,7 @@ namespace VISAP商科应用
             {
                 if (Tabulation.IsStrDouble(EachCol))
                 {
-                   string[] Numbers =  Tabulation.ReadVector(dataGridView1, Convert.ToInt32(EachCol) - 1).ToArray();
+                   string[] Numbers =  Tabulation.ReadVector(MainForm.MainDT, Convert.ToInt32(EachCol) - 1).ToArray();
                    result = CI(dataGridView1.Columns[Convert.ToInt32(EachCol) - 1].Name, Numbers, Tail, Statistics, Significance);
                    richTextBox1.AppendText(result);
 
@@ -569,6 +570,89 @@ namespace VISAP商科应用
             }
         }
 
-    
+        public static string QuickSummary(DataTable MainDT,int ColNum)
+        {
+            string ColName = MainDT.Columns[ColNum].ColumnName;
+            List <string> Numbers = Tabulation.ReadVector(MainDT, ColNum);
+            StringBuilder Result = new StringBuilder();
+                BigDecimal sum = 0;
+                BigDecimal mean = 0;
+                BigDecimal Variance = 0;
+                int  count = 0;
+                BigDecimal max = 0;
+                BigDecimal min = 0;
+                BigDecimal sum2 = 0;
+                Double TempNum = 0;
+                //sum2用于计算数字的平方，方便计算方差
+                foreach (string Num in Numbers)
+                {
+                    if (Double.TryParse(Num, out TempNum))
+                    {
+                        sum+= TempNum;
+                        sum2 += (BigDecimal)TempNum * (BigDecimal)TempNum;
+                        count++;
+                        if (count == 1)
+                        {
+                            max = TempNum;
+                            min = TempNum;
+                        }
+                        else{
+                            if (max < TempNum)
+                            {
+                                max = TempNum;
+                            }
+                            if (min > TempNum)
+                            {
+                                min = TempNum;
+                            }
+                        }
+                    }
+                }
+                if (count == 0)
+                {
+                    //如果没有获取任何数字
+                    return "";
+                }
+                else if (count == 1)
+                {
+                    //如果只有一个数字，可以计算均值，但是不可以计算标准差
+                    mean = sum / count;
+                    Result.Append(StrManipulation.PadLeftX(StrManipulation.VariableNamePolish(ColName), ' ', 12));
+                    Result.Append("\t");
+                    Result.Append(StrManipulation.PadLeftX(count.ToString(), ' ', 12));
+                    Result.Append("\t");
+                    Result.Append(StrManipulation.PadLeftX(MathV.NumberPolish(mean.ToString()), ' ', 12));
+                    Result.Append("\t");
+                    Result.Append(StrManipulation.PadLeftX("NA", ' ', 12));
+                    Result.Append("\t");
+                    Result.Append(StrManipulation.PadLeftX(MathV.NumberPolish(min.ToString()), ' ', 12));
+                    Result.Append("\t");
+                    Result.Append( StrManipulation.PadLeftX(MathV.NumberPolish(max.ToString()), ' ', 12));
+                    Result.Append("\r\n");
+                    //Temp += Result;
+                    return Result.ToString();
+                }
+                else
+                {
+                    //开始计算均值和方差
+                    //方差要乘以调整系数
+                    mean = sum / count;
+                    Variance = (sum2 / count - mean * mean) * count / (count - 1);
+                    Result.Append(StrManipulation.PadLeftX(StrManipulation.VariableNamePolish(ColName), ' ', 12));
+                    Result.Append("\t");
+                    Result.Append(StrManipulation.PadLeftX(count.ToString(), ' ', 12));
+                    Result.Append("\t");
+                    Result.Append(StrManipulation.PadLeftX(MathV.NumberPolish(mean.ToString()), ' ', 12));
+                    Result.Append("\t");
+                    Result.Append(StrManipulation.PadLeftX(MathV.NumberPolish(MathV.Sqrt(Variance.ToString()).ToString()), ' ', 12));
+                    Result.Append("\t");
+                    Result.Append(StrManipulation.PadLeftX(MathV.NumberPolish(min.ToString()), ' ', 12));
+                    Result.Append("\t");
+                    Result.Append( StrManipulation.PadLeftX(MathV.NumberPolish(max.ToString()), ' ', 12));
+                    Result.Append("\r\n");
+                    return Result.ToString();
+                }
+            }
+        }
     }
-}
+

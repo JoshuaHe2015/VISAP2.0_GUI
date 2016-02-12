@@ -14,6 +14,7 @@ namespace VISAP商科应用
     public partial class EasyGraph : Form
     {
         public static EasyGraph EasyGraphForm = null;
+        public static DataTable dt = new DataTable();
         public EasyGraph()
         {
             InitializeComponent();
@@ -56,7 +57,9 @@ namespace VISAP商科应用
 
         private void button_import_Click(object sender, EventArgs e)
         {
-            dataGridView_subset.DataSource = Tabulation.GetSubset(MainForm.S.dataGridView1, textBox_ChosenCols.Text);
+            dt.Clear();
+            dt = Tabulation.GetSubset(MainForm.MainDT, textBox_ChosenCols.Text);
+            dataGridView_subset.DataSource = dt;
             refresh_Combox();
         }
 
@@ -71,17 +74,17 @@ namespace VISAP商科应用
         private void button_add_Click(object sender, EventArgs e)
         {
             if (comboBox_x.Text.Trim()  != ""){
-            QuickPlot.QPlot(dataGridView_subset,chart_basic,
+            QuickPlot.QPlot(dt,chart_basic,
                 Tabulation.FindCol(dataGridView_subset, comboBox_x.Text),
                 Tabulation.FindCol(dataGridView_subset,comboBox_y.Text), 
-                textBox_ColorShow,comboBox_type.Text, textBox_Legend.Text);
+                textBox_ColorShow,comboBox_type.Text, textBox_Legend.Text,checkBox_IsXLabel.Checked);
             }
             else
             {
-                QuickPlot.QPlot(dataGridView_subset, chart_basic,
+                QuickPlot.QPlot(dt, chart_basic,
                 -1,
                 Tabulation.FindCol(dataGridView_subset, comboBox_y.Text),
-                textBox_ColorShow, comboBox_type.Text, textBox_Legend.Text);
+                textBox_ColorShow, comboBox_type.Text, textBox_Legend.Text, checkBox_IsXLabel.Checked);
             }
         }
 
@@ -175,6 +178,13 @@ namespace VISAP商科应用
             //chart_basic.SaveImage(ms, ChartImageFormat.Jpeg);
             chart_basic.SaveImage(ms, ChartImageFormat.Jpeg);
             ReportV.InsertImage(MainForm.S.rtb,ms,MainForm.S.ReportIsOn);
+        }
+
+        private void dataGridView_subset_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int Rows = e.RowIndex;
+            int Columns = e.ColumnIndex;
+            dt.Rows[Rows][Columns] = dataGridView_subset.Rows[Rows].Cells[Columns].Value;
         }
     }
 }
