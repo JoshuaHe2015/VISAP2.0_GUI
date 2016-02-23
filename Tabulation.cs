@@ -86,7 +86,7 @@ namespace VISAP商科应用
             return tb;
             //返回DataTable
         }
-        public static DataTable ImportCSV()
+        /*public static DataTable ImportCSV()
         {
             string fileToLoad = " ";
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -104,10 +104,10 @@ namespace VISAP商科应用
             {
                 return null;
             }
-        }
-        private static DataTable LoadFromCSVFile(string pCsvPath)
+        }*/
+        public static DataTable LoadFromCSVFile(string pCsvPath,char[] separators)
         {
-
+            //separators为分割方式
             DataTable dt = new DataTable();
             try
             {
@@ -117,7 +117,8 @@ namespace VISAP商科应用
                 StreamReader sr = new StreamReader(pCsvPath, System.Text.Encoding.Default);
                 //创建与数据源对应的数据列 
                 line = sr.ReadLine();
-                split = line.Split(',');
+                //split = line.Split(',');
+                split = line.Split(separators);
                 foreach (String colname in split)
                 {
                     dt.Columns.Add(colname, System.Type.GetType("System.String"));
@@ -128,7 +129,8 @@ namespace VISAP商科应用
                 {
                     j = 0;
                     row = dt.NewRow();
-                    split = line.Split(',');
+                    //split = line.Split(',');
+                    split = line.Split(separators);
                     foreach (String colname in split)
                     {
                         row[j] = colname;
@@ -187,18 +189,20 @@ namespace VISAP商科应用
             }
             sw.WriteLine("");
             //Table body
-            for (int i = 0; i < dt.Rows.Count; i++)
+            int dtRowsCount= dt.Rows.Count;
+            int dtColumnsCount = dt.Columns.Count;
+            for (int i = 0; i < dtRowsCount; i++)
             {
-                for (int j = 0; j < dt.Columns.Count; j++)
+                for (int j = 0; j < dtColumnsCount; j++)
                 {
-                    sw.Write(DelQuota(dt.Rows[i][j].ToString()));
+                    //sw.Write(DelQuota(dt.Rows[i][j].ToString()));
+                    sw.Write(dt.Rows[i][j].ToString());
                     sw.Write("\t");
                 }
                 sw.WriteLine("");
             }
             sw.Flush();
             sw.Close();
-
             DownLoadFile(path);
         }
 
@@ -485,16 +489,9 @@ namespace VISAP商科应用
             }
             return NewDT;
         }
-        public static int FindCol(DataGridView dataGridView1,string ID)
+        public static int FindCol(DataTable dt,string ID)
         {
-            for (int i = 0; i < dataGridView1.ColumnCount; i++)
-            {
-                if (dataGridView1.Columns[i].Name == ID)
-                {
-                    return i;
-                }
-            }
-            return -1;
+            return dt.Columns.IndexOf(ID);
         }
         public static bool IsStrDouble(string Str)
         {
@@ -593,27 +590,27 @@ namespace VISAP商科应用
                 }
             }
         }
-        public static DataTable BulkImportCSV(){
+        /*public static DataTable BulkImportCSV(){
             //批量导入CSV文件
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.InitialDirectory = "c:\\";
-            openFileDialog1.Filter = "csv文件(*.csv)|*.csv";
-            openFileDialog1.FilterIndex = 2;
-            openFileDialog1.RestoreDirectory = true;
-            openFileDialog1.Multiselect = true;
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                DataTable dt = new DataTable();
-                string[] files = openFileDialog1.FileNames.ToArray();
-                foreach (string EachFile in files)
-                {
-                    dt.Merge(LoadFromCSVFile(EachFile));
-                }
-                return dt;
-            }
-            return null;
-            
-    }
+             OpenFileDialog openFileDialog1 = new OpenFileDialog();
+             openFileDialog1.InitialDirectory = "c:\\";
+             openFileDialog1.Filter = "csv文件(*.csv)|*.csv";
+             openFileDialog1.FilterIndex = 2;
+             openFileDialog1.RestoreDirectory = true;
+             openFileDialog1.Multiselect = true;
+             if (openFileDialog1.ShowDialog() == DialogResult.OK)
+             {
+                 DataTable dt = new DataTable();
+                 string[] files = openFileDialog1.FileNames.ToArray();
+                 foreach (string EachFile in files)
+                 {
+                     //dt.Merge(LoadFromCSVFile(EachFile));
+                 }
+                 return dt;
+             }
+             return null;
+
+        }*/
         public static void InitDataSet(DataTable dtInfo, ref int nMax, ref int pageCount, ref  int pageCurrent,
             ref  int nCurrent, Label label_CurrentPage, Label label_TotalPage, DataGridView dataGridView1,TextBox textBox_CurrentPage,int pageSize = 1000)
         {
@@ -688,21 +685,22 @@ namespace VISAP商科应用
             }
             else
             {
-                    for (int i = 0; OriginRowsCount + i < OriginColsCount; i++)
+               int NewRowsCount = OriginDT.Rows.Count;
+               for (int i = 0; NewRowsCount + i < OriginColsCount; i++)
                     {
                         //添加需要的行
-                        dt.Rows.Add("");
+                        OriginDT.Rows.Add("");
                     }
                 
                 for (int m = 0; m < OriginRowsCount;m++)
                 {
-                    dt.Columns.Add("");
+                    OriginDT.Columns.Add("");
                     for (int i = 0; i < OriginColsCount; i++)
                     {
-                            dt.Rows[i][dt.Columns.Count - 1] = dtNew.Rows[i][m];
+                        OriginDT.Rows[i][OriginDT.Columns.Count - 1] = dtNew.Rows[i][m];
                     }
                 }
-                return dt;
+                return OriginDT;
             }
                 
         }
@@ -736,6 +734,144 @@ namespace VISAP商科应用
                 count++;
             }
             return dt;
+        }
+        public static void DeleteContent(ref DataTable MainDT, DataGridView dataGridView1, int RowOrCol = 0)
+        {
+            //RowOrCol = 0删除行
+            //RowOrCol = 1删除列
+            List<int> AllIndex = new List<int>();
+            int AllCellsNum = dataGridView1.SelectedCells.Count;
+            for (int i = 0; i < AllCellsNum; i++)
+            {
+                if (RowOrCol == 0)
+                {
+                    AllIndex.Add(dataGridView1.SelectedCells[i].RowIndex);
+                }
+                else
+                {
+                    AllIndex.Add(dataGridView1.SelectedCells[i].ColumnIndex);
+                }
+            }
+            AllIndex = AllIndex.Distinct().ToList();
+            AllIndex.Sort();
+            int Length = AllIndex.Count;
+            for (int i = Length - 1;i >=0;i--)
+            {
+                if (RowOrCol == 0)
+                {
+                    MainDT.Rows.RemoveAt(AllIndex[i]);
+                }
+                else
+                {
+                    MainDT.Columns.RemoveAt(AllIndex[i]);
+                }
+            }
+            return;
+        }
+        public static void DeleteCellContent(ref DataTable MainDT, DataGridView dataGridView1)
+        {
+            int AllCellsNum = dataGridView1.SelectedCells.Count;
+            for (int i = 0; i < AllCellsNum; i++){
+                MainDT.Rows[dataGridView1.SelectedCells[i].RowIndex][dataGridView1.SelectedCells[i].ColumnIndex] = "";
+            }
+            return;
+        }
+        public static DataTable DataTableSplit(DataTable MainDT,char[] separators,int Col)
+        {
+            int RowsCount = MainDT.Rows.Count;
+            int ColsCount = MainDT.Columns.Count;
+            //DataTable dt = new DataTable();
+            int dtNewCols = 0;
+            int len = 0;
+            int AddTimes = 0;
+            dtNewCols = 0;
+            int m = 0;
+            //List<string> Strs = new List<string>();
+            for (int i = 0; i < RowsCount; i++)
+            {
+                string [] Strs = MainDT.Rows[i][Col].ToString().Split(separators);
+                len = Strs.Length;
+                //dtNewCols = dt.Columns.Count;
+
+                if (dtNewCols < len)
+                {
+                    for (m = 0; dtNewCols + m < len; m++)
+                    {
+                        MainDT.Columns.Add("");
+                        
+                    }
+                    dtNewCols = dtNewCols +m;
+                }
+                AddTimes = 0;
+                foreach (string EachStr in Strs){
+                    MainDT.Rows[i][ColsCount+AddTimes] = EachStr;
+                    AddTimes++;
+                }
+            }
+            return MainDT;
+        }
+        public static void RenewColsItems(DataTable dt, ComboBox comBox1)
+        {
+            int ColNums = dt.Columns.Count;
+            string [] ColNames = new string [ColNums];
+            for (int i = 0; i < ColNums; i++){
+                ColNames[i]= dt.Columns[i].ColumnName;
+            }
+            comBox1.Items.Clear();
+            foreach (string EachCol in ColNames)
+            {
+                comBox1.Items.Add(EachCol);
+            }
+        }
+        public static bool IdentifyNARow(DataTable dt,int RowsNum, int[] ColsOfVariables)
+        {
+            //用于确认是否有空缺行
+            int ColsCount = dt.Columns.Count;
+            foreach (int num in ColsOfVariables)
+            {
+                        if (MainForm.MainDT.Rows[RowsNum][num].ToString().Trim() == "")
+                        {
+                            return false;
+                            //发现空格
+                        }
+                }
+            return true;
+            //未发现空格
+        }
+        public static string[] Classification(DataTable dt,int ColNum){
+            int RowsCount = dt.Rows.Count;
+            List<string> Information = new List<string>();
+            string Temp = "";
+            for (int i = 0; i < RowsCount; i++)
+            {
+                Temp = dt.Rows[i][ColNum].ToString().Trim();
+                if (Temp != "")
+                {
+                    Information.Add(Temp);
+                }
+                
+            }
+            return Information.Distinct().ToArray();
+        }
+        public static int[] LikilihoodCount(string[] Classification,DataTable dt,int ColNum)
+        {
+            //二项分布或多项分布似然函数
+            //Classification为分类，CountTimes用于计数
+            int RowsCount = dt.Rows.Count;
+            int[] CountTimes = new int[Classification.Length];
+            string Temp = "";
+            int Index = 0;
+            List<string>AllClass = Classification.ToList();
+            for (int i = 0; i < RowsCount; i++)
+            {
+                Temp = dt.Rows[i][ColNum].ToString().Trim();
+                Index = AllClass.IndexOf(Temp);
+                if (Index!=-1)
+                {
+                    CountTimes[Index]++;
+                }
+            }
+            return CountTimes;
         }
     }
 }

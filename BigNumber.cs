@@ -189,8 +189,25 @@ namespace VISAP商科应用
         public static implicit operator BigNumber(string x)
         {
             //让string可以隐式转换为BigNumber
-            BigNumber Num = new BigNumber(x);
-            return Num;
+            string StrX = x.ToString();
+            if (StrX.Contains("E"))
+            {
+                int position = StrX.IndexOf("E");
+                //如果是科学计数法则先转化为常规格式
+                
+                //StrX = Decimal.Parse(StrX, System.Globalization.NumberStyles.Float).ToString();
+                StrX = (new BigNumber(StrX.Substring(0, position - 1))
+                    * MathV.Pow(10, StrX.Substring(position + 1,
+                        StrX.Length - position - 1))).ToString();
+                BigNumber Num = new BigNumber(StrX);
+                return Num;
+            }
+            else
+            {
+                BigNumber Num = new BigNumber(x);
+                return Num;
+            }
+            
         }
         //和Int，Double之间的隐式转换
         public static implicit operator BigNumber(int x)
@@ -213,8 +230,9 @@ namespace VISAP商科应用
                 int position = StrX.IndexOf("E");
                 
                 //StrX = Decimal.Parse(StrX, System.Globalization.NumberStyles.Float).ToString();
-                StrX =( new BigNumber(StrX.Substring(0,position - 1))
-                    * new BigNumber(StrX.Substring(position + 1,StrX.Length - position -1)).Power(new BigNumber ("10"),30)).ToString();
+                StrX = (new BigNumber(StrX.Substring(0, position - 1))
+                    * MathV.Pow(10, StrX.Substring(position + 1,
+                        StrX.Length - position - 1))).ToString();
                 BigNumber Num = new BigNumber(StrX);
                 return Num;
             }

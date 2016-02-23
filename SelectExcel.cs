@@ -62,5 +62,14 @@ namespace VISAP商科应用
             }
             
         }
+        private const string Help = "导入Excel文件帮助：\r\n单击“选择文件”，选择一个Excel文件。\r\n输入你要导入的工作表（默认为sheet1），单击“导入”就可以啦～\r\n";
+
+        private void button_Help_Click(object sender, EventArgs e)
+        {
+            MainForm.S.richTextBox1.AppendText(Help);
+            MainForm.S.richTextBox1.Select();//让RichTextBox获得焦点
+            MainForm.S.richTextBox1.Select(MainForm.S.richTextBox1.TextLength, 0);//将插入符号置于文本结束处 
+            MainForm.S.richTextBox1.ScrollToCaret(); 
+        }
     }
 }

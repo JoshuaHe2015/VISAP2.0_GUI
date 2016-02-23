@@ -25,6 +25,9 @@ namespace VISAP商科应用
                 comboBox_Statistics.Text, comboBox_Operation.Text, comboBox_Tail.Text,
                 Convert.ToDouble(comboBox_Significance.Text), Convert.ToDouble(textBox_NullHypothesis.Text));
             MainForm.S.richTextBox1.AppendText(result);
+            MainForm.S.richTextBox1.Select();//让RichTextBox获得焦点
+            MainForm.S.richTextBox1.Select(MainForm.S.richTextBox1.TextLength, 0);//将插入符号置于文本结束处 
+            MainForm.S.richTextBox1.ScrollToCaret(); 
         }
 
         private void comboBox_Statistics_TextChanged(object sender, EventArgs e)

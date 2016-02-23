@@ -38,14 +38,11 @@
             this.dataGridView_subset = new System.Windows.Forms.DataGridView();
             this.chart_basic = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.设置轴标签ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.清空ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button_add = new System.Windows.Forms.Button();
-            this.textBox_ColorShow = new System.Windows.Forms.TextBox();
-            this.button_changeColor = new System.Windows.Forms.Button();
-            this.button_random = new System.Windows.Forms.Button();
             this.button_refresh = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox_type = new System.Windows.Forms.ComboBox();
@@ -133,40 +130,40 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.设置轴标签ToolStripMenuItem,
+            this.设置ToolStripMenuItem,
             this.复制ToolStripMenuItem,
             this.清空ToolStripMenuItem,
             this.保存ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 92);
-            // 
-            // 设置轴标签ToolStripMenuItem
-            // 
-            this.设置轴标签ToolStripMenuItem.Name = "设置轴标签ToolStripMenuItem";
-            this.设置轴标签ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.设置轴标签ToolStripMenuItem.Text = "设置标题";
-            this.设置轴标签ToolStripMenuItem.Click += new System.EventHandler(this.设置轴标签ToolStripMenuItem_Click);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 114);
             // 
             // 复制ToolStripMenuItem
             // 
             this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
-            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.复制ToolStripMenuItem.Text = "复制";
             this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
             // 
             // 清空ToolStripMenuItem
             // 
             this.清空ToolStripMenuItem.Name = "清空ToolStripMenuItem";
-            this.清空ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.清空ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.清空ToolStripMenuItem.Text = "清空";
             this.清空ToolStripMenuItem.Click += new System.EventHandler(this.清空ToolStripMenuItem_Click);
             // 
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.保存ToolStripMenuItem.Text = "保存";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
+            // 
+            // 设置ToolStripMenuItem
+            // 
+            this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
+            this.设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.设置ToolStripMenuItem.Text = "设置";
+            this.设置ToolStripMenuItem.Click += new System.EventHandler(this.设置ToolStripMenuItem_Click);
             // 
             // button_add
             // 
@@ -177,34 +174,6 @@
             this.button_add.Text = "添加";
             this.button_add.UseVisualStyleBackColor = true;
             this.button_add.Click += new System.EventHandler(this.button_add_Click);
-            // 
-            // textBox_ColorShow
-            // 
-            this.textBox_ColorShow.Location = new System.Drawing.Point(527, 17);
-            this.textBox_ColorShow.Name = "textBox_ColorShow";
-            this.textBox_ColorShow.Size = new System.Drawing.Size(100, 21);
-            this.textBox_ColorShow.TabIndex = 7;
-            this.textBox_ColorShow.Text = "随机颜色";
-            // 
-            // button_changeColor
-            // 
-            this.button_changeColor.Location = new System.Drawing.Point(643, 17);
-            this.button_changeColor.Name = "button_changeColor";
-            this.button_changeColor.Size = new System.Drawing.Size(75, 23);
-            this.button_changeColor.TabIndex = 8;
-            this.button_changeColor.Text = "更改颜色";
-            this.button_changeColor.UseVisualStyleBackColor = true;
-            this.button_changeColor.Click += new System.EventHandler(this.button_changeColor_Click);
-            // 
-            // button_random
-            // 
-            this.button_random.Location = new System.Drawing.Point(731, 17);
-            this.button_random.Name = "button_random";
-            this.button_random.Size = new System.Drawing.Size(75, 23);
-            this.button_random.TabIndex = 9;
-            this.button_random.Text = "随机颜色";
-            this.button_random.UseVisualStyleBackColor = true;
-            this.button_random.Click += new System.EventHandler(this.button_random_Click);
             // 
             // button_refresh
             // 
@@ -361,9 +330,6 @@
             this.Controls.Add(this.comboBox_type);
             this.Controls.Add(this.button_import);
             this.Controls.Add(this.textBox_ChosenCols);
-            this.Controls.Add(this.button_random);
-            this.Controls.Add(this.button_changeColor);
-            this.Controls.Add(this.textBox_ColorShow);
             this.Controls.Add(this.button_add);
             this.Controls.Add(this.chart_basic);
             this.Controls.Add(this.dataGridView_subset);
@@ -389,9 +355,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView_subset;
         private System.Windows.Forms.Button button_add;
-        private System.Windows.Forms.TextBox textBox_ColorShow;
-        private System.Windows.Forms.Button button_changeColor;
-        private System.Windows.Forms.Button button_random;
         private System.Windows.Forms.Button button_refresh;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox_type;
@@ -407,9 +370,9 @@
         private System.Windows.Forms.ToolStripMenuItem 复制ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 清空ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 设置轴标签ToolStripMenuItem;
         public System.Windows.Forms.DataVisualization.Charting.Chart chart_basic;
         private System.Windows.Forms.Button button_ImportReport;
         private System.Windows.Forms.CheckBox checkBox_IsXLabel;
+        private System.Windows.Forms.ToolStripMenuItem 设置ToolStripMenuItem;
     }
 }

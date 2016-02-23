@@ -15,11 +15,18 @@ namespace VISAP商科应用
         public ParameterEstimation()
         {
             InitializeComponent();
+            if (MainForm.S.dataGridView1.DataSource != null)
+            {
+                textBox_ChosenCols.Text = Tabulation.GetGridCols(MainForm.S.dataGridView1);
+            }
         }
 
         private void button_refresh_Click(object sender, EventArgs e)
         {
-            textBox_ChosenCols.Text = Tabulation.GetGridCols(MainForm.S.dataGridView1);
+            if (MainForm.S.dataGridView1.DataSource != null)
+            {
+                textBox_ChosenCols.Text = Tabulation.GetGridCols(MainForm.S.dataGridView1);
+            }
         }
 
         private void textBox_ChosenCols_TextChanged(object sender, EventArgs e)

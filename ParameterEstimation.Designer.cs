@@ -94,7 +94,8 @@
             this.comboBox_statistics.FormattingEnabled = true;
             this.comboBox_statistics.Items.AddRange(new object[] {
             "均值",
-            "比例"});
+            "比例",
+            "方差"});
             this.comboBox_statistics.Location = new System.Drawing.Point(413, 76);
             this.comboBox_statistics.Name = "comboBox_statistics";
             this.comboBox_statistics.Size = new System.Drawing.Size(121, 20);

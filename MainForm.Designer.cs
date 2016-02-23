@@ -36,7 +36,6 @@
             this.导入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.csv文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.批量导入csvToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.导出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.excelxlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.csvcsvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,11 +43,35 @@
             this.数据预处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.检测变量类型ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.缺失值处理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.转置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.所有内容ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.选中行ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.选中行ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.选中列ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.选中单元格ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.分列ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.问卷ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.多选题拆分ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.描述ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.汇总ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.简单图表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.问卷分析ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.多选题拆分ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.二项单选题ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.多项单选题ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.量表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.统计推断ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.参数估计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.单样本估计ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.假设检验ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.单样本检验ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.方差分析ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.线性回归ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.相关系数ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.多元线性回归ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.数据挖掘ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.朴素贝叶斯ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.报告ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label_Row = new System.Windows.Forms.Label();
@@ -68,15 +91,13 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label_TotalPage = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.转置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.所有内容ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.选中行ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -87,6 +108,8 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            this.dataGridView1.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnAdded);
+            this.dataGridView1.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseDoubleClick);
             // 
             // richTextBox1
             // 
@@ -105,7 +128,9 @@
             this.开始ToolStripMenuItem,
             this.数据预处理ToolStripMenuItem,
             this.描述ToolStripMenuItem,
+            this.问卷分析ToolStripMenuItem,
             this.统计推断ToolStripMenuItem,
+            this.数据挖掘ToolStripMenuItem,
             this.报告ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -135,8 +160,7 @@
             // 
             this.导入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.excelToolStripMenuItem,
-            this.csv文件ToolStripMenuItem,
-            this.批量导入csvToolStripMenuItem1});
+            this.csv文件ToolStripMenuItem});
             this.导入ToolStripMenuItem.Name = "导入ToolStripMenuItem";
             this.导入ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.导入ToolStripMenuItem.Text = "导入";
@@ -155,13 +179,6 @@
             this.csv文件ToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.csv文件ToolStripMenuItem.Text = "csv(*.csv)";
             this.csv文件ToolStripMenuItem.Click += new System.EventHandler(this.csv文件ToolStripMenuItem_Click);
-            // 
-            // 批量导入csvToolStripMenuItem1
-            // 
-            this.批量导入csvToolStripMenuItem1.Name = "批量导入csvToolStripMenuItem1";
-            this.批量导入csvToolStripMenuItem1.Size = new System.Drawing.Size(168, 22);
-            this.批量导入csvToolStripMenuItem1.Text = "批量导入csv";
-            this.批量导入csvToolStripMenuItem1.Click += new System.EventHandler(this.批量导入csvToolStripMenuItem1_Click);
             // 
             // 导出ToolStripMenuItem
             // 
@@ -198,7 +215,10 @@
             this.数据预处理ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.检测变量类型ToolStripMenuItem,
             this.缺失值处理ToolStripMenuItem,
-            this.转置ToolStripMenuItem});
+            this.转置ToolStripMenuItem,
+            this.删除ToolStripMenuItem,
+            this.分列ToolStripMenuItem,
+            this.问卷ToolStripMenuItem});
             this.数据预处理ToolStripMenuItem.Name = "数据预处理ToolStripMenuItem";
             this.数据预处理ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
             this.数据预处理ToolStripMenuItem.Text = "数据预处理";
@@ -216,6 +236,82 @@
             this.缺失值处理ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.缺失值处理ToolStripMenuItem.Text = "缺失值处理";
             this.缺失值处理ToolStripMenuItem.Click += new System.EventHandler(this.缺失值处理ToolStripMenuItem_Click);
+            // 
+            // 转置ToolStripMenuItem
+            // 
+            this.转置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.所有内容ToolStripMenuItem,
+            this.选中行ToolStripMenuItem});
+            this.转置ToolStripMenuItem.Name = "转置ToolStripMenuItem";
+            this.转置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.转置ToolStripMenuItem.Text = "转置";
+            // 
+            // 所有内容ToolStripMenuItem
+            // 
+            this.所有内容ToolStripMenuItem.Name = "所有内容ToolStripMenuItem";
+            this.所有内容ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.所有内容ToolStripMenuItem.Text = "所有内容";
+            this.所有内容ToolStripMenuItem.Click += new System.EventHandler(this.所有内容ToolStripMenuItem_Click);
+            // 
+            // 选中行ToolStripMenuItem
+            // 
+            this.选中行ToolStripMenuItem.Name = "选中行ToolStripMenuItem";
+            this.选中行ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.选中行ToolStripMenuItem.Text = "选中行";
+            this.选中行ToolStripMenuItem.Click += new System.EventHandler(this.选中行ToolStripMenuItem_Click);
+            // 
+            // 删除ToolStripMenuItem
+            // 
+            this.删除ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.选中行ToolStripMenuItem1,
+            this.选中列ToolStripMenuItem,
+            this.选中单元格ToolStripMenuItem});
+            this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.删除ToolStripMenuItem.Text = "删除";
+            // 
+            // 选中行ToolStripMenuItem1
+            // 
+            this.选中行ToolStripMenuItem1.Name = "选中行ToolStripMenuItem1";
+            this.选中行ToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.选中行ToolStripMenuItem1.Text = "选中行";
+            this.选中行ToolStripMenuItem1.Click += new System.EventHandler(this.选中行ToolStripMenuItem1_Click);
+            // 
+            // 选中列ToolStripMenuItem
+            // 
+            this.选中列ToolStripMenuItem.Name = "选中列ToolStripMenuItem";
+            this.选中列ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.选中列ToolStripMenuItem.Text = "选中列";
+            this.选中列ToolStripMenuItem.Click += new System.EventHandler(this.选中列ToolStripMenuItem_Click);
+            // 
+            // 选中单元格ToolStripMenuItem
+            // 
+            this.选中单元格ToolStripMenuItem.Name = "选中单元格ToolStripMenuItem";
+            this.选中单元格ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.选中单元格ToolStripMenuItem.Text = "选中单元格";
+            this.选中单元格ToolStripMenuItem.Click += new System.EventHandler(this.选中单元格ToolStripMenuItem_Click);
+            // 
+            // 分列ToolStripMenuItem
+            // 
+            this.分列ToolStripMenuItem.Name = "分列ToolStripMenuItem";
+            this.分列ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.分列ToolStripMenuItem.Text = "分列";
+            this.分列ToolStripMenuItem.Click += new System.EventHandler(this.分列ToolStripMenuItem_Click);
+            // 
+            // 问卷ToolStripMenuItem
+            // 
+            this.问卷ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.多选题拆分ToolStripMenuItem});
+            this.问卷ToolStripMenuItem.Name = "问卷ToolStripMenuItem";
+            this.问卷ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.问卷ToolStripMenuItem.Text = "问卷";
+            // 
+            // 多选题拆分ToolStripMenuItem
+            // 
+            this.多选题拆分ToolStripMenuItem.Name = "多选题拆分ToolStripMenuItem";
+            this.多选题拆分ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.多选题拆分ToolStripMenuItem.Text = "多选题拆分";
+            this.多选题拆分ToolStripMenuItem.Click += new System.EventHandler(this.多选题拆分ToolStripMenuItem_Click);
             // 
             // 描述ToolStripMenuItem
             // 
@@ -240,20 +336,129 @@
             this.简单图表ToolStripMenuItem.Text = "简单图表";
             this.简单图表ToolStripMenuItem.Click += new System.EventHandler(this.简单图表ToolStripMenuItem_Click);
             // 
+            // 问卷分析ToolStripMenuItem
+            // 
+            this.问卷分析ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.多选题拆分ToolStripMenuItem1,
+            this.二项单选题ToolStripMenuItem,
+            this.多项单选题ToolStripMenuItem,
+            this.量表ToolStripMenuItem});
+            this.问卷分析ToolStripMenuItem.Name = "问卷分析ToolStripMenuItem";
+            this.问卷分析ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.问卷分析ToolStripMenuItem.Text = "问卷分析";
+            // 
+            // 多选题拆分ToolStripMenuItem1
+            // 
+            this.多选题拆分ToolStripMenuItem1.Name = "多选题拆分ToolStripMenuItem1";
+            this.多选题拆分ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.多选题拆分ToolStripMenuItem1.Text = "多选题拆分";
+            this.多选题拆分ToolStripMenuItem1.Click += new System.EventHandler(this.多选题拆分ToolStripMenuItem1_Click);
+            // 
+            // 二项单选题ToolStripMenuItem
+            // 
+            this.二项单选题ToolStripMenuItem.Name = "二项单选题ToolStripMenuItem";
+            this.二项单选题ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.二项单选题ToolStripMenuItem.Text = "二项单选题";
+            this.二项单选题ToolStripMenuItem.Click += new System.EventHandler(this.二项单选题ToolStripMenuItem_Click);
+            // 
+            // 多项单选题ToolStripMenuItem
+            // 
+            this.多项单选题ToolStripMenuItem.Name = "多项单选题ToolStripMenuItem";
+            this.多项单选题ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.多项单选题ToolStripMenuItem.Text = "多项单选题";
+            this.多项单选题ToolStripMenuItem.Click += new System.EventHandler(this.多项单选题ToolStripMenuItem_Click);
+            // 
+            // 量表ToolStripMenuItem
+            // 
+            this.量表ToolStripMenuItem.Name = "量表ToolStripMenuItem";
+            this.量表ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.量表ToolStripMenuItem.Text = "量表";
+            // 
             // 统计推断ToolStripMenuItem
             // 
             this.统计推断ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.参数估计ToolStripMenuItem});
+            this.参数估计ToolStripMenuItem,
+            this.假设检验ToolStripMenuItem,
+            this.方差分析ToolStripMenuItem,
+            this.线性回归ToolStripMenuItem});
             this.统计推断ToolStripMenuItem.Name = "统计推断ToolStripMenuItem";
             this.统计推断ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.统计推断ToolStripMenuItem.Text = "统计推断";
             // 
             // 参数估计ToolStripMenuItem
             // 
+            this.参数估计ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.单样本估计ToolStripMenuItem});
             this.参数估计ToolStripMenuItem.Name = "参数估计ToolStripMenuItem";
             this.参数估计ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.参数估计ToolStripMenuItem.Text = "参数估计";
             this.参数估计ToolStripMenuItem.Click += new System.EventHandler(this.参数估计ToolStripMenuItem_Click);
+            // 
+            // 单样本估计ToolStripMenuItem
+            // 
+            this.单样本估计ToolStripMenuItem.Name = "单样本估计ToolStripMenuItem";
+            this.单样本估计ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.单样本估计ToolStripMenuItem.Text = "单样本估计";
+            this.单样本估计ToolStripMenuItem.Click += new System.EventHandler(this.单样本估计ToolStripMenuItem_Click);
+            // 
+            // 假设检验ToolStripMenuItem
+            // 
+            this.假设检验ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.单样本检验ToolStripMenuItem});
+            this.假设检验ToolStripMenuItem.Name = "假设检验ToolStripMenuItem";
+            this.假设检验ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.假设检验ToolStripMenuItem.Text = "假设检验";
+            // 
+            // 单样本检验ToolStripMenuItem
+            // 
+            this.单样本检验ToolStripMenuItem.Name = "单样本检验ToolStripMenuItem";
+            this.单样本检验ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.单样本检验ToolStripMenuItem.Text = "单样本检验";
+            this.单样本检验ToolStripMenuItem.Click += new System.EventHandler(this.单样本检验ToolStripMenuItem_Click);
+            // 
+            // 方差分析ToolStripMenuItem
+            // 
+            this.方差分析ToolStripMenuItem.Name = "方差分析ToolStripMenuItem";
+            this.方差分析ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.方差分析ToolStripMenuItem.Text = "方差分析";
+            // 
+            // 线性回归ToolStripMenuItem
+            // 
+            this.线性回归ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.相关系数ToolStripMenuItem,
+            this.多元线性回归ToolStripMenuItem});
+            this.线性回归ToolStripMenuItem.Name = "线性回归ToolStripMenuItem";
+            this.线性回归ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.线性回归ToolStripMenuItem.Text = "线性回归";
+            // 
+            // 相关系数ToolStripMenuItem
+            // 
+            this.相关系数ToolStripMenuItem.Name = "相关系数ToolStripMenuItem";
+            this.相关系数ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.相关系数ToolStripMenuItem.Text = "相关系数";
+            this.相关系数ToolStripMenuItem.Click += new System.EventHandler(this.相关系数ToolStripMenuItem_Click);
+            // 
+            // 多元线性回归ToolStripMenuItem
+            // 
+            this.多元线性回归ToolStripMenuItem.Name = "多元线性回归ToolStripMenuItem";
+            this.多元线性回归ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.多元线性回归ToolStripMenuItem.Text = "多元线性回归";
+            this.多元线性回归ToolStripMenuItem.Click += new System.EventHandler(this.多元线性回归ToolStripMenuItem_Click);
+            // 
+            // 数据挖掘ToolStripMenuItem
+            // 
+            this.数据挖掘ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.朴素贝叶斯ToolStripMenuItem});
+            this.数据挖掘ToolStripMenuItem.Name = "数据挖掘ToolStripMenuItem";
+            this.数据挖掘ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.数据挖掘ToolStripMenuItem.Text = "数据挖掘";
+            // 
+            // 朴素贝叶斯ToolStripMenuItem
+            // 
+            this.朴素贝叶斯ToolStripMenuItem.Name = "朴素贝叶斯ToolStripMenuItem";
+            this.朴素贝叶斯ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.朴素贝叶斯ToolStripMenuItem.Text = "朴素贝叶斯";
+            this.朴素贝叶斯ToolStripMenuItem.Click += new System.EventHandler(this.朴素贝叶斯ToolStripMenuItem_Click);
             // 
             // 报告ToolStripMenuItem
             // 
@@ -448,29 +653,6 @@
             this.label10.TabIndex = 22;
             this.label10.Text = "页";
             // 
-            // 转置ToolStripMenuItem
-            // 
-            this.转置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.所有内容ToolStripMenuItem,
-            this.选中行ToolStripMenuItem});
-            this.转置ToolStripMenuItem.Name = "转置ToolStripMenuItem";
-            this.转置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.转置ToolStripMenuItem.Text = "转置";
-            // 
-            // 所有内容ToolStripMenuItem
-            // 
-            this.所有内容ToolStripMenuItem.Name = "所有内容ToolStripMenuItem";
-            this.所有内容ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.所有内容ToolStripMenuItem.Text = "所有内容";
-            this.所有内容ToolStripMenuItem.Click += new System.EventHandler(this.所有内容ToolStripMenuItem_Click);
-            // 
-            // 选中行ToolStripMenuItem
-            // 
-            this.选中行ToolStripMenuItem.Name = "选中行ToolStripMenuItem";
-            this.选中行ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.选中行ToolStripMenuItem.Text = "选中行";
-            this.选中行ToolStripMenuItem.Click += new System.EventHandler(this.选中行ToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -531,7 +713,6 @@
         private System.Windows.Forms.ToolStripMenuItem 简单图表ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 数据预处理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 检测变量类型ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 批量导入csvToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 缺失值处理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 统计推断ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 参数估计ToolStripMenuItem;
@@ -553,6 +734,27 @@
         private System.Windows.Forms.ToolStripMenuItem 转置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 所有内容ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 选中行ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 删除ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 选中行ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 选中列ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 选中单元格ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 分列ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 数据挖掘ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 朴素贝叶斯ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 问卷ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 多选题拆分ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 假设检验ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 方差分析ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 线性回归ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 单样本估计ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 单样本检验ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 相关系数ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 多元线性回归ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 问卷分析ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 多选题拆分ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 二项单选题ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 多项单选题ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 量表ToolStripMenuItem;
     }
 }
 

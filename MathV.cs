@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
+using System.Numerics;
 namespace VISAP商科应用
 {
     public class MathV
@@ -82,6 +83,15 @@ namespace VISAP商科应用
         }
         public static string NumberPolish(string Number)
         {
+            //首先要判别输入的数字是否为科学计数法
+            int Char_E = Number.IndexOf('E');
+            if (Char_E != -1)
+            {
+                //如果是科学计数法则先转化为常规格式
+                Number = (new BigNumber(Number.Substring(0, Char_E - 1))
+                    * MathV.Pow(10,Number.Substring(Char_E + 1,
+                        Number.Length - Char_E-1))).ToString();
+            }
             //目标为控制位数在10位
             Number = Number.Trim();
             int CountDecimalPoint = 0;
@@ -281,10 +291,10 @@ namespace VISAP商科应用
             return MinValue;
         }
         //行列式值计算
-        public static BigNumber MatValue(BigNumber[,] MatrixList, int Level)  //求得|A| 如果为0 说明不可逆
+        public static BigDecimal MatValue(BigDecimal[,] MatrixList, int Level)  //求得|A| 如果为0 说明不可逆
         {
 
-            BigNumber[,] dMatrix = new BigNumber[Level, Level];   //定义二维数组，行列数相同
+            BigDecimal[,] dMatrix = new BigDecimal[Level, Level];   //定义二维数组，行列数相同
 
             for (int i = 0; i < Level; i++)
 
@@ -293,22 +303,22 @@ namespace VISAP商科应用
                     dMatrix[i, j] = MatrixList[i, j];     //将参数的值，付给定义的数组
 
 
-            BigNumber c, x;
-            BigNumber k = new BigNumber("1");
+            BigDecimal c, x;
+            BigDecimal k = 1;
 
             for (int i = 0, j = 0; i < Level && j < Level; i++, j++)
             {
 
-                if (CompareNumber.Compare(dMatrix[i, j], new BigNumber("0")) == 0)   //判断对角线上的数据是否为0
+                if (dMatrix[i, j] == 0)   //判断对角线上的数据是否为0
                 {
 
                     int m = i;
 
-                    for (; CompareNumber.Compare(dMatrix[m, j], new BigNumber("0")) == 0; m++) ;  //如果对角线上数据为0，从该数据开始依次往后判断是否为0
+                    for (;m<Level && dMatrix[m, j] == 0; m++) ;  //如果对角线上数据为0，从该数据开始依次往后判断是否为0
+                    m--;
+                    if (m == Level - 1)                      //当该行从对角线开始数据都为0 的时候 返回0
 
-                    if (m == Level)                      //当该行从对角线开始数据都为0 的时候 返回0
-
-                        return new BigNumber("0");
+                        return 0;
 
                     else
                     {
@@ -328,7 +338,7 @@ namespace VISAP商科应用
 
                         // Change value pre-value
 
-                        k = k * new BigNumber("-1");
+                        k = k * (-1);
 
                     }
 
@@ -349,35 +359,36 @@ namespace VISAP商科应用
 
             }
 
-            BigNumber sn = new BigNumber("1");
+            BigDecimal sn = 1;
 
             for (int i = 0; i < Level; i++)
             {
 
-                if (dMatrix[i, i] != new BigNumber("0"))
+                if (dMatrix[i, i] != 0)
 
                     sn *= dMatrix[i, i];
 
                 else
 
-                    return new BigNumber("0");
+                    return 0;
 
             }
 
             return k * sn;
 
         }
-        public static BigNumber[,] MatInv(BigNumber[,] dMatrix, int Level)
+        public static BigDecimal[,] MatInv(BigDecimal[,] dMatrix, int Level)
         {
 
-            BigNumber dMatrixValue = MatValue(dMatrix, Level);
+            BigDecimal dMatrixValue = MatValue(dMatrix, Level);
 
-            if (CompareNumber.Compare(dMatrixValue, new BigNumber("0")) == 0) return null;       //A为该矩阵 若|A| =0 则该矩阵不可逆 返回空
+            if (dMatrixValue== 0)
+                return null;       //A为该矩阵 若|A| =0 则该矩阵不可逆 返回空
 
 
-            BigNumber[,] dReverseMatrix = new BigNumber[Level, 2 * Level];
+            BigDecimal[,] dReverseMatrix = new BigDecimal[Level, 2 * Level];
 
-            BigNumber x, c;
+            BigDecimal x, c;
 
             // Init Reverse matrix
 
@@ -393,11 +404,11 @@ namespace VISAP商科应用
 
                     else
 
-                        dReverseMatrix[i, j] = new BigNumber("0");
+                        dReverseMatrix[i, j] = 0;
 
                 }
 
-                dReverseMatrix[i, Level + i] = new BigNumber("1");
+                dReverseMatrix[i, Level + i] = 1;
 
 
             }
@@ -407,12 +418,12 @@ namespace VISAP商科应用
             for (int i = 0, j = 0; i < Level && j < Level; i++, j++)
             {
 
-                if (CompareNumber.Compare(dReverseMatrix[i, j], new BigNumber("0")) == 0)   //判断一行对角线 是否为0
+                if (dReverseMatrix[i, j] == 0)   //判断一行对角线 是否为0
                 {
 
                     int m = i;
 
-                    for (; CompareNumber.Compare(dMatrix[m, j], new BigNumber("0")) == 0; m++) ;
+                    for (; dMatrix[m, j] == 0; m++) ;
 
                     if (m == Level)
 
@@ -433,12 +444,12 @@ namespace VISAP商科应用
 
                 x = dReverseMatrix[i, j];
 
-                if (x != new BigNumber("1"))                  //如果对角线元素不为1  执行以下
+                if (x != 1)                  //如果对角线元素不为1  执行以下
                 {
 
                     for (int n = j; n < 2 * Level; n++)
 
-                        if (dReverseMatrix[i, n] != new BigNumber("0"))
+                        if (dReverseMatrix[i, n] != 0)
 
                             dReverseMatrix[i, n] /= x;   //相除  使i行第一个数字为1
 
@@ -468,7 +479,7 @@ namespace VISAP商科应用
 
                 for (int j = i + 1; j < Level; j++)
 
-                    if (dReverseMatrix[i, j] != new BigNumber("0"))
+                    if (dReverseMatrix[i, j] != 0)
                     {
 
                         c = dReverseMatrix[i, j];
@@ -481,7 +492,7 @@ namespace VISAP商科应用
 
             }
 
-            BigNumber[,] dReturn = new BigNumber[Level, Level];
+            BigDecimal[,] dReturn = new BigDecimal[Level, Level];
 
             for (int i = 0; i < Level; i++)
 
@@ -544,6 +555,11 @@ namespace VISAP商科应用
                 BigNumber[,] a = new BigNumber[len11, len12];
                 for (int i = 0; i < len11; i++)
                 {
+                    for (int j = 0; j < len22; j++)
+                        a[i, j] = 0;
+                }
+                for (int i = 0; i < len11; i++)
+                {
                     for (int j = 0; j < len12; j++)
                     {
                         a[i, j] = mat1[i, j] + mat2[i, j];
@@ -558,7 +574,7 @@ namespace VISAP商科应用
         }
 
 
-        public static BigNumber[,] MatMinu(BigNumber[,] mat1, BigNumber[,] mat2)
+        public static BigDecimal[,] MatMinu(BigDecimal[,] mat1, BigDecimal[,] mat2)
         {//矩阵减法
             int len11 = mat1.GetLength(0);
             int len12 = mat1.GetLength(1);
@@ -567,7 +583,7 @@ namespace VISAP商科应用
 
             if (len11 == len21 && len12 == len22)
             {
-                BigNumber[,] a = new BigNumber[len11, len12];
+                BigDecimal[,] a = new BigDecimal[len11, len12];
                 for (int i = 0; i < len11; i++)
                 {
                     for (int j = 0; j < len12; j++)
@@ -583,7 +599,7 @@ namespace VISAP商科应用
             }
         }
 
-        public static BigNumber[,] MatTimes(BigNumber[,] mat1, BigNumber[,] mat2)
+        public static BigDecimal[,] MatTimes(BigDecimal[,] mat1, BigDecimal[,] mat2)
         {    //矩阵乘法
             int len11 = mat1.GetLength(0);
             int len12 = mat1.GetLength(1);
@@ -591,17 +607,23 @@ namespace VISAP商科应用
             int len22 = mat2.GetLength(1);
             if (len12 == len21)
             {
-                BigNumber[,] a = new BigNumber[len11, len22];
+                BigDecimal[,] a = new BigDecimal[len11, len22];
+                //首先对数组进行初始化
                 for (int i = 0; i < len11; i++)
                 {
                     for (int j = 0; j < len22; j++)
+                        a[i, j] = 0;
+                }
+                    for (int i = 0; i < len11; i++)
                     {
-                        for (int u = 0; u < len12; u++)
+                        for (int j = 0; j < len22; j++)
                         {
-                            a[i, j] += mat1[i, u] * mat2[u, j];
+                            for (int u = 0; u < len12; u++)
+                            {
+                                a[i, j] += mat1[i, u] * mat2[u, j];
+                            }
                         }
                     }
-                }
                 return a;
             }
             else
@@ -621,12 +643,12 @@ namespace VISAP商科应用
             }
             return true;
         }
-        public static BigNumber[,] MatTrans(BigNumber[,] mat)
+        public static BigDecimal[,] MatTrans(BigDecimal[,] mat)
         {
             //矩阵转置
             int len1 = mat.GetLength(0);
             int len2 = mat.GetLength(1);
-            BigNumber[,] a = new BigNumber[len2, len1];
+            BigDecimal[,] a = new BigDecimal[len2, len1];
             for (int i = 0; i < len1; i++)
             {
                 for (int j = 0; j < len2; j++)
@@ -644,14 +666,27 @@ namespace VISAP商科应用
             }
             else
             {
-                return Num.Power(0.5, 30);
+                //return Num.Power(0.5, 30);
+                return DecimalPowerCalculator.Sqrt(Num, 30);
             }
         }
         public static BigNumber Pow(BigNumber Num1,BigNumber Num2,int precision = 30)
         {
             //Num1为底，Num2为幂次
 			//precision默认为保留30位小数
-            return Num1.Power(Num2,precision);
+            if (Num2 > 0)
+            {
+                return Num1.Power(Num2, precision);
+            }
+            else if (Num2 <0)
+            {
+                Num2 = 0 - Num2;
+                return 1 / Num1.Power(Num2, precision);
+            }
+            else
+            {
+                return 1;
+            }
         }
         public static BigNumber Sin(BigNumber x)
         {
@@ -696,7 +731,29 @@ namespace VISAP商科应用
             }
             return v * y * (new BigNumber("2"));
         }
+        public static BigInteger Factorial(BigInteger n)
+        {
+            if (n == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                BigInteger i = 1;
+                BigInteger Result = 1;
 
+                while (i <= n)
+                {
+                    Result *= i;
+                    i++;
+                }
+                return Result;
+            }
+        }
+        public static BigInteger Combination(BigInteger n, BigInteger r)
+        {
+            return Factorial(n) / (Factorial(r) * Factorial(n - r));
+        }
 
     }
 }

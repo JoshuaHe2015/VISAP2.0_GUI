@@ -11,7 +11,7 @@ namespace VISAP商科应用
 {
     public class QuickPlot
     {
-        public static void QPlot(DataTable dt, Chart chart_basic, int xCol, int yCol, TextBox ChooseColor,string type, string Legend = "",bool IsXLabel = false)
+        public static void QPlot(DataTable dt, Chart chart_basic, int xCol, int yCol,string type, string Legend = "",bool IsXLabel = false)
         {
             //如果xCol = -1，则认为x轴没有数值
             //yCol必须存在
@@ -37,25 +37,26 @@ namespace VISAP商科应用
                     series.ChartType = SeriesChartType.Pie;
                     break;
                 case "条形图":
+                    series.MarkerStyle = MarkerStyle.None;
                     series.ChartType = SeriesChartType.Bar;
                     break;
                 case "柱形图":
+                    series.MarkerStyle = MarkerStyle.None;
                     series.ChartType = SeriesChartType.Column;
                     break;
                 case "面积图":
+                    series.MarkerStyle = MarkerStyle.None;
                     series.ChartType = SeriesChartType.Area;
                     break;
                 case "棱锥图":
                     series.ChartType = SeriesChartType.Pyramid;
                     break;
                 case "雷达图":
+                    series.MarkerStyle = MarkerStyle.None;
                     series.ChartType = SeriesChartType.Radar;
                     break;
             }
-            if (ChooseColor.Text != "随机颜色")
-            {
-                series.Color = ChooseColor.BackColor;
-            }
+            
             double TempX = 0;
             double TempY = 0;
             //TempX和TempY用于录入数据
@@ -154,6 +155,10 @@ namespace VISAP商科应用
             else if (xCol != -1 && IsXLabel == true)
             {
                 chart_basic.Series.Add(series);
+                var XAxis = chart_basic.ChartAreas[0].AxisX;
+                XAxis.MajorGrid.Enabled = false;
+                var YAxis = chart_basic.ChartAreas[0].AxisY;
+                YAxis.MajorGrid.Enabled = false;
                 return;
             }
             if (xCol == -1)
@@ -209,6 +214,49 @@ namespace VISAP商科应用
             dMin = dStartPoint;
             dMax = dEndPoint;
             return;
+        }
+        public static string FindTypeName(string OriginName){
+            switch (OriginName)
+            {
+                case "Point":
+                    return "散点图";
+                case "Line":
+                    return "折线图";
+                case "StepLine":
+                    return "阶梯线图";
+                case "Pie":
+                    return "饼图";
+                case "Bar":
+                    return "条形图";
+                case "Column":
+                    return "柱形图";
+                case "Area":
+                    return "面积图";
+                case "Pyramid":
+                    return "棱锥图";
+                case "Radar":
+                    return "雷达图";
+            }
+            return OriginName;
+        }
+        public static string FindMarkerStyle(string OriginStyle)
+        {
+            switch (OriginStyle)
+            {
+                case "Circle":
+                    return "圆形";
+                case "Cross":
+                    return "十字形";
+                case "Diamond":
+                    return "菱形";
+                case "None":
+                    return "无";
+                case "Square":
+                    return "正方形";
+                case "Triangle":
+                    return "三角形";
+            }
+            return OriginStyle;
         }
     }
 }

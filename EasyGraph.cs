@@ -19,6 +19,10 @@ namespace VISAP商科应用
         {
             InitializeComponent();
             EasyGraphForm = this;
+            if (MainForm.S.dataGridView1.DataSource != null)
+            {
+                textBox_ChosenCols.Text = Tabulation.GetGridCols(MainForm.S.dataGridView1);
+            }
         }
         void refresh_Combox()
         {
@@ -33,11 +37,7 @@ namespace VISAP商科应用
 
         }
 
-        private void button_random_Click(object sender, EventArgs e)
-        {
-            textBox_ColorShow.BackColor = comboBox_x.BackColor;
-            textBox_ColorShow.Text = "随机颜色";
-        }
+        
 
         private void button_refresh_Click(object sender, EventArgs e)
         {
@@ -45,15 +45,7 @@ namespace VISAP商科应用
             
         }
 
-        private void button_changeColor_Click(object sender, EventArgs e)
-        {
-            ColorDialog ChooseColor = new ColorDialog();
-            if (ChooseColor.ShowDialog() == DialogResult.OK)
-            {
-                textBox_ColorShow.BackColor = ChooseColor.Color;
-                textBox_ColorShow.Text = ChooseColor.Color.Name;
-            }
-        }
+       
 
         private void button_import_Click(object sender, EventArgs e)
         {
@@ -75,16 +67,14 @@ namespace VISAP商科应用
         {
             if (comboBox_x.Text.Trim()  != ""){
             QuickPlot.QPlot(dt,chart_basic,
-                Tabulation.FindCol(dataGridView_subset, comboBox_x.Text),
-                Tabulation.FindCol(dataGridView_subset,comboBox_y.Text), 
-                textBox_ColorShow,comboBox_type.Text, textBox_Legend.Text,checkBox_IsXLabel.Checked);
+                Tabulation.FindCol(dt, comboBox_x.Text),
+                Tabulation.FindCol(dt,comboBox_y.Text),comboBox_type.Text, textBox_Legend.Text,checkBox_IsXLabel.Checked);
             }
             else
             {
                 QuickPlot.QPlot(dt, chart_basic,
                 -1,
-                Tabulation.FindCol(dataGridView_subset, comboBox_y.Text),
-                textBox_ColorShow, comboBox_type.Text, textBox_Legend.Text, checkBox_IsXLabel.Checked);
+                Tabulation.FindCol(dt, comboBox_y.Text), comboBox_type.Text, textBox_Legend.Text, checkBox_IsXLabel.Checked);
             }
         }
 
@@ -166,12 +156,7 @@ namespace VISAP商科应用
             chart_basic.Series.Clear();
         }
 
-        private void 设置轴标签ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SetLabels LabelForm = new SetLabels();
-            LabelForm.ShowDialog();
-        }
-
+        
         private void button_ImportReport_Click(object sender, EventArgs e)
         {
             MemoryStream ms = new MemoryStream();
@@ -185,6 +170,12 @@ namespace VISAP商科应用
             int Rows = e.RowIndex;
             int Columns = e.ColumnIndex;
             dt.Rows[Rows][Columns] = dataGridView_subset.Rows[Rows].Cells[Columns].Value;
+        }
+
+        private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GraphSet GraphSetForm = new GraphSet();
+            GraphSetForm.ShowDialog();
         }
     }
 }

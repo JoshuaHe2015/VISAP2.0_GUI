@@ -39,7 +39,7 @@
             // 
             // textBox_Cols
             // 
-            this.textBox_Cols.Location = new System.Drawing.Point(73, 12);
+            this.textBox_Cols.Location = new System.Drawing.Point(77, 9);
             this.textBox_Cols.Name = "textBox_Cols";
             this.textBox_Cols.Size = new System.Drawing.Size(380, 21);
             this.textBox_Cols.TabIndex = 0;
@@ -47,7 +47,7 @@
             // 
             // button_summary
             // 
-            this.button_summary.Location = new System.Drawing.Point(378, 83);
+            this.button_summary.Location = new System.Drawing.Point(382, 80);
             this.button_summary.Name = "button_summary";
             this.button_summary.Size = new System.Drawing.Size(75, 23);
             this.button_summary.TabIndex = 1;
@@ -57,7 +57,7 @@
             // 
             // button_ImportReport
             // 
-            this.button_ImportReport.Location = new System.Drawing.Point(378, 118);
+            this.button_ImportReport.Location = new System.Drawing.Point(382, 115);
             this.button_ImportReport.Name = "button_ImportReport";
             this.button_ImportReport.Size = new System.Drawing.Size(75, 23);
             this.button_ImportReport.TabIndex = 2;
@@ -69,7 +69,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(-1, 12);
+            this.label1.Location = new System.Drawing.Point(3, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 16);
             this.label1.TabIndex = 3;
@@ -77,7 +77,7 @@
             // 
             // textBox_VarNames
             // 
-            this.textBox_VarNames.Location = new System.Drawing.Point(73, 50);
+            this.textBox_VarNames.Location = new System.Drawing.Point(77, 47);
             this.textBox_VarNames.Multiline = true;
             this.textBox_VarNames.Name = "textBox_VarNames";
             this.textBox_VarNames.ReadOnly = true;
@@ -88,7 +88,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(-1, 50);
+            this.label2.Location = new System.Drawing.Point(3, 47);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
             this.label2.TabIndex = 5;
@@ -96,7 +96,7 @@
             // 
             // button_refresh
             // 
-            this.button_refresh.Location = new System.Drawing.Point(378, 48);
+            this.button_refresh.Location = new System.Drawing.Point(382, 45);
             this.button_refresh.Name = "button_refresh";
             this.button_refresh.Size = new System.Drawing.Size(75, 23);
             this.button_refresh.TabIndex = 6;

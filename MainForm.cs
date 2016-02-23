@@ -56,7 +56,7 @@ namespace VISAP商科应用
 
         private void csv文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable();
+            /*DataTable dt = new DataTable();
             dt = Tabulation.ImportCSV();
             if (dt != null)
             {
@@ -65,8 +65,9 @@ namespace VISAP商科应用
                     ref nCurrent, label_CurrentPage, label_TotalPage,
                     dataGridView1, textBox_CurrentPage,pageSize);
                 //Tabulation.DataType(dataGridView1);
-            }
-            
+            }*/
+            ImportCSV CSVForm = new ImportCSV();
+            CSVForm.ShowDialog();
         }
 
         private void excelxlsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -117,22 +118,7 @@ namespace VISAP商科应用
         {
         }
 
-        private void 批量导入csvToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            
-            DataTable dt = new DataTable();
-            dt = Tabulation.BulkImportCSV(); ;
-            if (dt != null)
-            {
-                //dataGridView1.DataSource = dt;
-                MainDT = dt;
-                Tabulation.InitDataSet(MainDT, ref nMax, ref pageCount, ref pageCurrent,
-                    ref nCurrent, label_CurrentPage, label_TotalPage,
-                    dataGridView1, textBox_CurrentPage, pageSize);
-                //Tabulation.DataType(dataGridView1);
-            }
-            //Tabulation.DataType(dataGridView1);
-        }
+       
 
         private void 缺失值处理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -142,8 +128,7 @@ namespace VISAP商科应用
 
         private void 参数估计ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ParameterEstimation ParaForm = new ParameterEstimation();
-            ParaForm.Show();
+            
         }
 
         private void 报告ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -242,6 +227,108 @@ namespace VISAP商科应用
             Tabulation.InitDataSet(MainDT, ref nMax, ref pageCount, ref pageCurrent,
                      ref nCurrent, label_CurrentPage, label_TotalPage,
                      dataGridView1, textBox_CurrentPage, pageSize);
+        }
+
+        private void 选中行ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Tabulation.DeleteContent(ref MainDT, dataGridView1, 0);
+            Tabulation.InitDataSet(MainDT, ref nMax, ref pageCount, ref pageCurrent,
+                     ref nCurrent, label_CurrentPage, label_TotalPage,
+                     dataGridView1, textBox_CurrentPage, pageSize);
+        }
+
+        private void 选中列ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tabulation.DeleteContent(ref MainDT, dataGridView1, 1);
+            Tabulation.InitDataSet(MainDT, ref nMax, ref pageCount, ref pageCurrent,
+                     ref nCurrent, label_CurrentPage, label_TotalPage,
+                     dataGridView1, textBox_CurrentPage, pageSize);
+        }
+
+        private void dataGridView1_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        {
+            //这个事件的设置是为了禁止自动排序
+            e.Column.SortMode = DataGridViewColumnSortMode.NotSortable;
+        }
+
+        private void 选中单元格ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tabulation.DeleteCellContent(ref MainDT, dataGridView1);
+            Tabulation.InitDataSet(MainDT, ref nMax, ref pageCount, ref pageCurrent,
+                     ref nCurrent, label_CurrentPage, label_TotalPage,
+                     dataGridView1, textBox_CurrentPage, pageSize);
+        }
+
+        private void 分列ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //dataGridView1.DataSource = Tabulation.DataTableSplit(ref MainDT,new char[] {','},0);
+            Split SplitForm = new Split();
+            SplitForm.ShowDialog();
+        }
+        public static int ColumnNameChange = 0;
+        //ColumnNameChange用于记录修改的列号
+        private void dataGridView1_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            ColumnNameChange=e.ColumnIndex;
+            VariableSet VariableSetForm = new VariableSet();
+            VariableSetForm.ShowDialog();
+
+        }
+
+        private void 朴素贝叶斯ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NaiveBayesian NaiveBayesianForm = new NaiveBayesian();
+            NaiveBayesianForm.Show();
+        }
+
+        private void 多选题拆分ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MultipleChoice MCQ = new MultipleChoice();
+            MCQ.Show();
+        }
+
+        private void 单样本估计ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ParameterEstimation ParaForm = new ParameterEstimation();
+            ParaForm.Show();
+        }
+
+        private void 单样本检验ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HypothesisTesting HTForm = new HypothesisTesting();
+            HTForm.ShowDialog();
+        }
+
+        private void 相关系数ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Correlation CorForm = new Correlation();
+            CorForm.Show();
+        }
+
+        private void 多元线性回归ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Regression RegForm = new Regression();
+            RegForm.Show();
+
+
+        }
+
+        private void 多选题拆分ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MultipleChoice MCQ = new MultipleChoice();
+            MCQ.Show();
+        }
+
+        private void 二项单选题ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Binomial BinoForm = new Binomial();
+            BinoForm.Show();
+        }
+
+        private void 多项单选题ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Multinomial MultinomialForm = new Multinomial();
+            MultinomialForm.Show();
         }
         }
     }

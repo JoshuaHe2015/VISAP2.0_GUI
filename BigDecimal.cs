@@ -233,6 +233,11 @@ namespace VISAP商科应用
         public override string ToString()
         {
             string IntPartStr = IntPart.ToString();
+            int Negativie = 0;
+            if (IntPartStr[0] == '-')
+            {
+                Negativie = 1;
+            }
             if (Rank == 0)
             {
                 return IntPartStr;
@@ -241,14 +246,25 @@ namespace VISAP商科应用
             {
                 int len = IntPartStr.Length;
                 //求出整数部分的长度
-                if (len <= -Rank)
+                if (len - Negativie <= -Rank)
                 {
                     //需要补0
                     StringBuilder Str = new StringBuilder();
+                    if (Negativie == 1)
+                    {
+                        Str.Append("-");
+                    }
                     Str.Append("0.");
-                    string AddZero = new string('0', -Rank - len);
+                    string AddZero = new string('0', -Rank - len + Negativie);
                     Str.Append(AddZero);
-                    Str.Append(IntPartStr);
+                    if (Negativie == 1)
+                    {
+                        Str.Append(IntPartStr.Substring(1, len-1));
+                    }
+                    else
+                    {
+                        Str.Append(IntPartStr);
+                    }
                     return Str.ToString();
                 }
                 else
@@ -288,13 +304,12 @@ namespace VISAP商科应用
             //double doubled = d % 1;//这么一下是小数
             //百度知道上找到的简单实用的办法。。。
 
-            BigInteger Num = (int)d;
-            Num = Num * 1000000000;
+            BigInteger Num = (BigInteger)d;
+            Num = Num * 100000000000000;
             //Num = Num + (int)(doubled * 100000000);
-            Num = Num + (int)((d % 1) * 1000000000);
+            Num = Num + (BigInteger)((d % 1) * 100000000000000);
             //因为不确定Double型的精度，所以算到小数点后14位
-            //为了提高速度考虑，利用整型进行转换，精确到小数点后9位
-            return new BigDecimal(Num, -9);
+            return new BigDecimal(Num, -14);
         }
         public static int Compare(BigDecimal Num1, BigDecimal Num2)
         {
